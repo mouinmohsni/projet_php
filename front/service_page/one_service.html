@@ -32,6 +32,7 @@
 		<!--slick.css-->
         <link rel="stylesheet" href="../assets/css/slick.css">
 		<link rel="stylesheet" href="../assets/css/slick-theme.css">
+		<link rel="stylesheet" href="../assets/css/templatemo-villa-agency.css">
 		
         <!--bootstrap.min.css-->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
@@ -44,7 +45,6 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="../assets/css/responsive.css">
-        <link rel="stylesheet" href="../assets/css/templatemo-villa-agency.css">
         
     
 
@@ -135,38 +135,11 @@
 						Find Best Place, Restaurant, Hotel, Real State and many more think in just One click 
 					</p>
 				</div>
-				<div class="welcome-hero-serch-box">
-					<div class="welcome-hero-form">
-						<div class="single-welcome-hero-form">
-							<h3>what?</h3>
-							<form action="../index.html">
-								<input type="text" placeholder="Ex: palce, resturent, food, automobile" />
-							</form>
-							<div class="welcome-hero-form-icon">
-								<i class="flaticon-list-with-dots"></i>
-							</div>
-						</div>
-						<div class="single-welcome-hero-form">
-							<h3>location</h3>
-							<form action="../index.html">
-								<input type="text" placeholder="Ex: london, newyork, rome" />
-							</form>
-							<div class="welcome-hero-form-icon">
-								<i class="flaticon-gps-fixed-indicator"></i>
-							</div>
-						</div>
-					</div>
-					<div class="welcome-hero-serch">
-						<button class="welcome-hero-btn" onclick="window.location.href='#'">
-							 search  <i data-feather="search"></i> 
-						</button>
-					</div>
-				</div>
+				
 			</div>
 
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
-
 		<!--list-topics start -->
 		<section id="list-topics" class="list-topics">
 			<div class="container">
@@ -230,9 +203,11 @@
                     
                         <br><br>When you look for free CSS templates, you can simply type TemplateMo in any search engine website. In addition, you can type TemplateMo Digital Marketing, TemplateMo Corporate Layouts, etc. Master cleanse +1 intelligentsia swag post-ironic, slow-carb chambray knausgaard PBR&B DSA poutine neutra cardigan hoodie pop-up.</p>
                     </div> 
-                    <button class="welcome-hero-btn" onclick="window.location.href='#'">
-                        reserver  <i data-feather="search"></i> 
-                   </button>
+                    <!-- Bouton qui déclenche le formulaire -->
+					<button class="welcome-hero-btn" type="button" data-bs-toggle="collapse" data-bs-target="#reservationForm" aria-expanded="false" aria-controls="reservationForm">
+						Réserver <i data-feather="search"></i>
+					</button>
+
                 </div>
 
                 <div class="col-lg-4">
@@ -261,114 +236,91 @@
             </div>
         </div>
 		
-        <div>
-           <!-- Onglets -->
-           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active fade in" id="tours">
-                <div class="tab-para">
+        <!-- Formulaire de réservation caché -->
+        <div class="collapse mt-4" id="reservationForm">	
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active fade in" id="tours">
+					<div class="tab-para">
+						<form>
+							<div class="row">
 
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12">
-                            <div class="single-tab-select-box">
+								<div class="col-lg-4 col-md-4 col-sm-12">
+									<div class="single-tab-select-box">
+										<h2>destination</h2>
+										<div class="travel-select-icon">
+											<select class="form-control ">
+												<option value="default">enter your destination country</option><!-- /.option-->
+												<option value="turkey">turkey</option><!-- /.option-->
+												<option value="russia">russia</option><!-- /.option-->
+												<option value="egept">egypt</option><!-- /.option-->
 
-                                <h2>destination</h2>
+											</select><!-- /.select-->
+										</div><!-- /.travel-select-icon -->
+									</div><!--/.single-tab-select-box-->
+								</div><!--/.col-->
 
-                                <div class="travel-select-icon">
-                                    <select class="form-control ">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<div class="single-tab-select-box">
+										<h2>check in</h2>
+										<div class="travel-check-icon">	
+											<input type="text" name="check_in" class="form-control" data-toggle="datepicker" placeholder="12 -01 - 2017 ">		
+										</div><!-- /.travel-check-icon -->
+									</div><!--/.single-tab-select-box-->
+								</div><!--/.col-->
 
-                                          <option value="default">enter your destination country</option><!-- /.option-->
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<div class="single-tab-select-box">
+										<h2>check out</h2>
+										<div class="travel-check-icon">		
+											<input type="text" name="check_out" class="form-control"  data-toggle="datepicker" placeholder="22 -01 - 2017 ">
+										</div><!-- /.travel-check-icon -->
+									</div><!--/.single-tab-select-box-->
+								</div><!--/.col-->
 
-                                          <option value="turkey">turkey</option><!-- /.option-->
+								<div class="col-lg-2 col-md-1 col-sm-4">
+									<div class="single-tab-select-box">
+										<h2>Adult</h2>
+										<div class="travel-select-icon">
+											<select class="form-control ">
+												<option value="2">2</option><!-- /.option-->
+												<option value="1">1</option><!-- /.option-->
+												<option value="2">2</option><!-- /.option-->
+												<option value="3">3</option><!-- /.option-->
+												<option value="4">4</option><!-- /.option-->
+												<option value="5">5</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.travel-select-icon -->
+									</div><!--/.single-tab-select-box-->
+								</div><!--/.col-->
 
-                                          <option value="russia">russia</option><!-- /.option-->
-                                          <option value="egept">egypt</option><!-- /.option-->
-
-                                    </select><!-- /.select-->
-                                </div><!-- /.travel-select-icon -->
-
-                            </div><!--/.single-tab-select-box-->
-                        </div><!--/.col-->
-
-                        <div class="col-lg-2 col-md-3 col-sm-4">
-                            <div class="single-tab-select-box">
-                                <h2>check in</h2>
-                                <div class="travel-check-icon">
-                                    <form action="#">
-                                        <input type="text" name="check_in" class="form-control" data-toggle="datepicker" placeholder="12 -01 - 2017 ">
-                                    </form>
-                                </div><!-- /.travel-check-icon -->
-                            </div><!--/.single-tab-select-box-->
-                        </div><!--/.col-->
-
-                        <div class="col-lg-2 col-md-3 col-sm-4">
-                            <div class="single-tab-select-box">
-                                <h2>check out</h2>
-                                <div class="travel-check-icon">
-                                    <form action="#">
-                                        <input type="text" name="check_out" class="form-control"  data-toggle="datepicker" placeholder="22 -01 - 2017 ">
-                                    </form>
-                                </div><!-- /.travel-check-icon -->
-                            </div><!--/.single-tab-select-box-->
-                        </div><!--/.col-->
-
-                        <div class="col-lg-2 col-md-1 col-sm-4">
-                            <div class="single-tab-select-box">
-                                <h2>Adult</h2>
-                                <div class="travel-select-icon">
-                                    <select class="form-control ">
-
-                                          <option value="2">2</option><!-- /.option-->
-                                          <option value="1">1</option><!-- /.option-->
-                                          <option value="2">2</option><!-- /.option-->
-                                          <option value="3">3</option><!-- /.option-->
-                                          <option value="4">4</option><!-- /.option-->
-                                          <option value="5">5</option><!-- /.option-->
-
-                                    </select><!-- /.select-->
-                                </div><!-- /.travel-select-icon -->
-                            </div><!--/.single-tab-select-box-->
-                        </div><!--/.col-->
-
-                        <div class="col-lg-2 col-md-1 col-sm-4">
-                            <div class="single-tab-select-box">
-                                <h2>children's</h2>
-                                <div class="travel-select-icon">
-                                    <select class="form-control ">
-
-                                          <option value="0">0</option><!-- /.option-->
-                                          <option value="3">1</option><!-- /.option-->
-                                          <option value="2">2</option><!-- /.option-->
-                                          <option value="3">3</option><!-- /.option-->
-                                          <option value="4">4</option><!-- /.option-->
-                                          <option value="5">5</option><!-- /.option-->
-
-                                    </select><!-- /.select-->
-                                </div><!-- /.travel-select-icon -->
-                            </div><!--/.single-tab-select-box-->
-                        </div><!--/.col-->
-
-                    </div><!--/.row-->
-
-                    <div class="row">
-                        <div class="col-sm-5">
-                        <div class="clo-sm-7">
-                            <div class="about-btn travel-mrt-0 pull-right">
-                                <button class="welcome-hero-btn" onclick="window.location.href='#'">
-                                    reserver  <i data-feather="search"></i> 
-                               </button>
-                            </div><!--/.about-btn-->
-                        </div><!--/.col-->
-
-                    </div><!--/.row-->
-
-                </div><!--/.tab-para-->
-
-            </div><!--/.tabpannel-->
-        </div><!--/.tab content-->
-           
-
-
+								<div class="col-lg-2 col-md-1 col-sm-4">
+									<div class="single-tab-select-box">
+									<h2>children's</h2>
+										<div class="travel-select-icon">
+											<select class="form-control ">
+												<option value="0">0</option><!-- /.option-->
+												<option value="3">1</option><!-- /.option-->
+												<option value="2">2</option><!-- /.option-->
+												<option value="3">3</option><!-- /.option-->
+												<option value="4">4</option><!-- /.option-->
+												<option value="5">5</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.travel-select-icon -->
+									</div><!--/.single-tab-select-box-->
+								</div><!--/.col-->
+							</div><!--/.row-->
+							<div class="row">
+								<div  class="center-bt">
+									<button  class="welcome-hero-btn">reserve</button><!--/.travel-btn-->
+								</div>
+							</div><!--/.row-->
+						</form>		
+					</div><!--/.tab-para-->
+				</div><!--/.tabpannel-->
+			</div><!--/.tab content-->
         </div>
+    	
+		
 
 		<!--footer start-->
 		<footer id="footer"  class="footer">
@@ -424,25 +376,26 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 		
 		<!--bootstrap.min.js-->
-        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 		
 		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
+		<script src="../assets/js/bootsnav.js"></script>
 
         <!--feather.min.js-->
-        <script  src="assets/js/feather.min.js"></script>
+        <script  src="../assets/js/feather.min.js"></script>
 
         <!-- counter js -->
-		<script src="assets/js/jquery.counterup.min.js"></script>
-		<script src="assets/js/waypoints.min.js"></script>
+		<script src="../assets/js/jquery.counterup.min.js"></script>
+		<script src="../assets/js/waypoints.min.js"></script>
 
         <!--slick.min.js-->
-        <script src="assets/js/slick.min.js"></script>
+        <script src="../assets/js/slick.min.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 		     
         <!--Custom JS-->
-        <script src="assets/js/custom.js"></script>
+        <script src="../assets/js/custom.js"></script>
         
     </body>
 	
