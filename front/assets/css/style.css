@@ -458,6 +458,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     border: 1px solid #edeff1;
     border-radius: 3px;
     margin-bottom: 25px;
+    max-height: 455px;
+    overflow : hidden;
     -webkit-transition: .3s linear; 
     -moz-transition:.3s linear; 
     -ms-transition:.3s linear; 
