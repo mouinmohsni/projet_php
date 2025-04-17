@@ -1,3 +1,11 @@
+<?php
+include "../../classes/Hotels.php";
+
+$hotel = new Hotels();
+$lise_hotel=$hotel->geAllhotels();
+?>
+
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -168,7 +176,7 @@
 								<div class="single-list-topics-icon">
 									<i class="flaticon-building"></i>
 								</div>
-								<h2><a href="../service_page/hotels.html">hotels</a></h2>
+								<h2><a href="hotels.php">hotels</a></h2>
 								<p>185 listings</p>
 							</div>
 						</li>
@@ -309,13 +317,14 @@
 
 				<div class="explore-content">
 					<div class="row">
-						
+						<?php
+                        while ($one_hotel = $lise_hotel->fetch()){
+                        ?>
 						<div class="col-md-4 col-sm-6">
 							<div class="single-explore-item">
 								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
+									<img src="../assets/images/<?php echo $one_hotel['url_image']; ?>" alt="explore image">
 									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
 										<div class="single-explore-image-icon-box">
 											<ul>
 												<li>
@@ -333,15 +342,15 @@
 									</div>
 								</div>
 								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
+									<h2><a href="#"><?php echo $one_hotel['nom']; ?></a></h2>
 									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
+										<span class="explore-rating"><?php echo $one_hotel['rating']; ?></span>
+										<a href="#"> <?php echo $one_hotel['ratings_count']; ?> ratings</a>
 										<span class="explore-price-box">
 											form
-											<span class="explore-price">50$-500$</span>
+											<span class="explore-price"><?php echo $one_hotel["prix"];?>$</span>
 										</span>
-										 <a href="#">hotel</a>
+										 <a href="#"><?php echo $one_hotel["nom_categorie"];?></a>
 									</p>
 									<div class="explore-person">
 										<div class="row">
@@ -353,364 +362,24 @@
 												</div>
 											</div>
 											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
+                                                    <?php echo $one_hotel["description"];?>
 												</p>
 											</div>
 										</div>
 									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
+
 								</div>
 							</div>
 						</div>
 
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="../assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                        <?php
+                        }
+                        ?>
 
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="../assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="../assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="../assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="../assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="../assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+
 
 					</div>
 				</div>
@@ -771,31 +440,31 @@
 		
 		<!-- Include all js compiled plugins (below), or include individual files as needed -->
 
-		<script src="assets/js/jquery.js"></script>
+		<script src="../assets/js/jquery.js"></script>
         
         <!--modernizr.min.js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 		
 		<!--bootstrap.min.js-->
-        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
 		
 		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
+		<script src="../assets/js/bootsnav.js"></script>
 
         <!--feather.min.js-->
-        <script  src="assets/js/feather.min.js"></script>
+        <script  src="../assets/js/feather.min.js"></script>
 
         <!-- counter js -->
-		<script src="assets/js/jquery.counterup.min.js"></script>
-		<script src="assets/js/waypoints.min.js"></script>
+		<script src="../assets/js/jquery.counterup.min.js"></script>
+		<script src="../assets/js/waypoints.min.js"></script>
 
         <!--slick.min.js-->
-        <script src="assets/js/slick.min.js"></script>
+        <script src="../assets/js/slick.min.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 		     
         <!--Custom JS-->
-        <script src="assets/js/custom.js"></script>
+        <script src="../assets/js/custom.js"></script>F
         
     </body>
 	
