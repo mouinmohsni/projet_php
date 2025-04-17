@@ -167,7 +167,7 @@ $lise_hotel=$hotel->geAllhotels();
 								<div class="single-list-topics-icon">
 									<i class="flaticon-travel"></i>
 								</div>
-								<h2><a href="../service_page/destination.html">destination</a></h2>
+								<h2><a href="destination.php">destination</a></h2>
 								<p>214 listings</p>
 							</div>
 						</li>
