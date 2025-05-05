@@ -113,7 +113,7 @@ $lise_destination = $destination->geAllDestinations();
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="../index.html">list<span>race</span></a>
+			                <a class="navbar-brand" href="../index.php">list<span>race</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -121,8 +121,8 @@ $lise_destination = $destination->geAllDestinations();
 			            <!-- Collect the nav links, forms, and other content for toggling -->
 			            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li class=" scroll active"><a href="../index.html">home</a></li>
-			                    <li class="scroll"><a href="../service.html">Services</a></li>
+			                    <li class=" scroll active"><a href="../index.php">home</a></li>
+			                    <li class="scroll"><a href="../service.php">Services</a></li>
 			                    <li class="scroll"><a href="../explore.html">explore</a></li>
 			                    <li class="scroll"><a href="../contact.html">contact</a></li>
 			                </ul><!--/.nav -->
@@ -149,7 +149,7 @@ $lise_destination = $destination->geAllDestinations();
 					<div class="welcome-hero-form">
 						<div class="single-welcome-hero-form">
 							<h3>what?</h3>
-							<form action="../index.html">
+							<form action="../index.php">
 								<input type="text" placeholder="Ex: palce, resturent, food, automobile" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -158,7 +158,7 @@ $lise_destination = $destination->geAllDestinations();
 						</div>
 						<div class="single-welcome-hero-form">
 							<h3>location</h3>
-							<form action="../index.html">
+							<form action="../index.php">
 								<input type="text" placeholder="Ex: london, newyork, rome" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -187,7 +187,7 @@ $lise_destination = $destination->geAllDestinations();
 								<div class="single-list-topics-icon">
 									<i class="flaticon-restaurant"></i>
 								</div>
-								<h2><a href="resturent.php">resturent</a></h2>
+								<h2><a href="nos_service.php">resturent</a></h2>
 								<p>150 listings</p>
 							</div>
 						</li>

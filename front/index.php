@@ -1,3 +1,15 @@
+<?php
+
+
+include "../classes/Categorie.php";
+
+$categries = new Categorie();
+$lise_categories = $categries ->getAllCategories();
+
+
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -98,7 +110,7 @@
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="./index.html">list<span>race</span></a>
+			                <a class="navbar-brand" href="index.php">list<span>race</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -106,8 +118,8 @@
 			            <!-- Collect the nav links, forms, and other content for toggling -->
 			            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li class="active"><a href="./index.html">home</a></li>
-			                    <li><a href="./service.html">Services</a></li>
+			                    <li class="active"><a href="index.php">home</a></li>
+			                    <li><a href="service.php">Services</a></li>
 			                    <li><a href="./explore.html">explore</a></li>
 			                    <li><a href="./contact.html">contact</a></li>
 			                </ul><!--/.nav -->
@@ -163,51 +175,63 @@
 		<!--welcome-hero end -->
 
 		<!--list-topics start -->
-		<section id="list-topics" class="list-topics">
-			<div class="container">
-				<div class="list-topics-content">
-					<ul>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-restaurant"></i>
-								</div>
-								<h2><a href="service_page/resturent.php">resturent</a></h2>
-								<p>150 listings</p>
-							</div>
-						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-travel"></i>
-								</div>
-								<h2><a href="service_page/destination.php">destination</a></h2>
-								<p>214 listings</p>
-							</div>
-						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-building"></i>
-								</div>
-								<h2><a href="service_page/hotels.php">hotels</a></h2>
-								<p>185 listings</p>
-							</div>
-						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-transport"></i>
-								</div>
-								<h2><a href="./service_page/automotion.html">automotion</a></h2>
-								<p>120 listings</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div><!--/.container-->
+        <section id="list-topics" class="list-topics">
+            <div class="container">
+                <div class="list-topics-content">
+                    <ul>
+                        <?php
 
-		</section><!--/.list-topics-->
+                        while($categorie=$lise_categories->fetch()){
+
+
+
+                            ?>
+                            <li>
+                                <div class="single-list-topics-content">
+                                    <div class="single-list-topics-icon">
+                                        <i class="<?php echo $categorie["image"] ?>"></i>
+                                    </div>
+                                    <h2><a href="service_page/nos_service.php?id=<?php echo $categorie['Categorie_id']?>"><?php echo $categorie["nom_categorie"] ?> </a></h2>
+                                    <p>150 listings</p>
+                                </div>
+                            </li>
+
+                            <?php
+                        }
+                        ?>
+                        <!--						<li>-->
+                        <!--							<div class="single-list-topics-content">-->
+                        <!--								<div class="single-list-topics-icon">-->
+                        <!--									<i class="flaticon-travel"></i>-->
+                        <!---->
+                        <!--								</div>-->
+                        <!--								<h2><a href="destination.php">destination</a></h2>-->
+                        <!--								<p>214 listings</p>-->
+                        <!--							</div>-->
+                        <!--						</li>-->
+                        <!--						<li>-->
+                        <!--							<div class="single-list-topics-content">-->
+                        <!--								<div class="single-list-topics-icon">-->
+                        <!--									<i class="flaticon-building"></i>-->
+                        <!--								</div>-->
+                        <!--								<h2><a href="hotels.php">hotels</a></h2>-->
+                        <!--								<p>185 listings</p>-->
+                        <!--							</div>-->
+                        <!--						</li>-->
+                        <!--						<li>-->
+                        <!--							<div class="single-list-topics-content">-->
+                        <!--								<div class="single-list-topics-icon">-->
+                        <!--									<i class="flaticon-transport"></i>-->
+                        <!--								</div>-->
+                        <!--								<h2><a href="../service_page/automotion.html">automotion</a></h2>-->
+                        <!--								<p>120 listings</p>-->
+                        <!--							</div>-->
+                        <!--						</li>-->
+                    </ul>
+                </div>
+            </div><!--/.container-->
+
+        </section><!--/.list-topics-->
 		<!--list-topics end-->
 
 		<!--works start -->
@@ -817,12 +841,12 @@
 		           	<div class="row">
 			           	<div class="col-sm-3">
 			           		 <div class="navbar-header">
-				                <a class="navbar-brand" href="./index.html">list<span>race</span></a>
+				                <a class="navbar-brand" href="index.html">list<span>race</span></a>
 				            </div><!--/.navbar-header-->
 			           	</div>
 			           	<div class="col-sm-9">
 			           		<ul class="footer-menu-item">
-			                    <li class="scroll"><a href="./service.html">Services</a></li>
+			                    <li class="scroll"><a href="service.php">Services</a></li>
 			                    <li class="scroll"><a href="./explore.html">explore</a></li>
 			                    <li class="scroll"><a href="./contact.html">contact</a></li>
 			                    <li class=" scroll"><a href="./login.html">my account</a></li>

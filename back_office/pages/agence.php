@@ -1,17 +1,16 @@
-<!--
-=========================================================
-* Soft UI Dashboard 3 - v1.1.0
-=========================================================
+<?php
+include  "../../classes/Agence.php";
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
+$agences = new Agence();
+$liste_agences = $agences -> getAllAgences();
 
-=========================================================
+if (isset($_GET['id'])){
+    $id = $_GET['id'];
+    $agences->deleteAgence($id);
+    header("location:agence.php");
+}
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +41,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="../assets/img/logo-ct-dark.PNG" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Soft UI Dashboard 3</span>
       </a>
     </div>
@@ -90,7 +89,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  active" href="../pages/agence.html">
+          <a class="nav-link  active" href="agence.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -290,10 +289,10 @@
                 <div class="card-header pb-0 p-3">
                   <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">Payment Method</h6>
+                      <h6 class="mb-0">L'agence le plus actif </h6>
                     </div>
                     <div class="col-6 text-end">
-                      <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Card</a>
+                      <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;cree nouveau agence </a>
                     </div>
                   </div>
                 </div>
@@ -392,46 +391,30 @@
         <div class="col-md-7 mt-4">
           <div class="card">
             <div class="card-header pb-0 px-3">
-              <h6 class="mb-0">Agence Information</h6>
+              <h6 class="mb-0">liste des agence Agences</h6>
             </div>
             <div class="card-body pt-4 p-3">
+
               <ul class="list-group">
-                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Oliver Liam</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Ethan James</h6>
-                    <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                    <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                    <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                  </div>
-                </li>
+                  <?php
+                  while ($agence =$liste_agences->fetch()){
+                      ?>
+                        <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                          <div class="d-flex flex-column">
+                            <h6 class="mb-3 text-sm"><?php echo $agence["nom_agence"]?></h6>
+                            <span class="mb-2 text-xs">Nom du responsable : <span class="text-dark font-weight-bold ms-sm-2"><?php echo $agence["nom"] ?></span></span>
+                            <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold"><?php echo $agence["e_mail"] ?></span></span>
+                            <span class="text-xs">Number tel: <span class="text-dark ms-sm-2 font-weight-bold"><?php echo $agence["tel"] ?></span></span>
+                          </div>
+                          <div class="ms-auto text-end">
+                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="?id=<?php echo $agence["user_id"] ?>"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                            <a class="btn btn-link text-dark px-3 mb-0" href="update_agence.php?id=<?php echo $agence["user_id"] ?>"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                          </div>
+                        </li>
+                  <?php
+                  }
+                  ?>
+
               </ul>
             </div>
           </div>

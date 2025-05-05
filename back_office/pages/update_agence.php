@@ -1,3 +1,28 @@
+<?php
+include  "../../classes/Agence.php";
+
+$agences = new Agence();
+$liste_agences = $agences -> getAllAgences();
+
+if (isset($_GET['id'])) {
+    $ic = $_GET['id'];
+    $agence = $agences -> getAgenceById($ic);
+    var_dump($agence);
+}
+if (isset($_POST['update'])) {
+    if($_POST['image'] = null){
+        $_POST['image'] = $agence['image'];
+
+    }
+    var_dump($_POST);
+
+
+        $agences -> updateAgence($_POST , $_FILES);
+    header("location:agence.php");
+}
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +54,7 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="../assets/img/logo-ct-dark.PNG" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Soft UI Dashboard 3</span>
       </a>
     </div>
@@ -77,7 +102,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="agence.html">
+          <a class="nav-link  " href="agence.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -173,7 +198,7 @@
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <h6 class="font-weight-bolder mb-0">Ajouter Agence</h6>
+          <h6 class="font-weight-bolder mb-0">modifier Agence</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -208,7 +233,7 @@
             <div class="d-flex align-items-center">
               <div>
                 <h5 class="mb-1 text-white font-weight-bolder">
-                  Ajouter une agence
+                  Modification d'agence
                 </h5>
               </div>
             </div>
@@ -220,13 +245,13 @@
 
     <div class="container-fluid py-4">
       <div class="row d-flex">
-        <form action=""  class="row d-flex">
+        <form action="update_agence.php" method="post" enctype="multipart/form-data"  class="row d-flex">
           <div class="col-md-8">
             <div class="card">
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center">
-                  <p class="mb-0">Edit Profile</p>
-                  <button class="btn btn-primary btn-sm ms-auto">Settings</button>
+                  <p class="mb-0">Modifer l'Agence <?php echo $agence['nom_agence']; ?> </p>
+                  <button type="submit" class="btn btn-primary btn-sm ms-auto" name="update">Modifier</button>
                 </div>
               </div>
               <div class="card-body">
@@ -234,26 +259,27 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
+                        <input class="form-control" type="hidden" value="<?php echo $agence['user_id']; ?>" name="user_id" id="user_id">
                       <label for="nom_agence" class="form-control-label">nom de l'agence </label>
-                      <input class="form-control" type="text" value="lucky.jesse" name="nom_agence" id="nom_agence">
+                      <input class="form-control" type="text" value="<?php echo $agence['nom_agence']; ?>" name="nom_agence" id="nom_agence">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="e-mail" class="form-control-label">Email address</label>
-                      <input class="form-control" type="email" value="jesse@example.com"  name="e-mail" id="e-mail">
+                      <label for="e_mail" class="form-control-label">Email address</label>
+                      <input class="form-control" type="email" value="<?php echo $agence['e_mail']; ?>"  name="e_mail" id="e_mail">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="nom" class="form-control-label">Nom responsable </label>
-                      <input class="form-control" type="text"  name="nom" id="nom">
+                      <input class="form-control" type="text"  name="nom" id="nom" value="<?php echo $agence['nom']; ?>">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="prenom" class="form-control-label">Prenom responsable</label>
-                      <input class="form-control" type="text" name="prenom" id="prenom">
+                      <input class="form-control" type="text" name="prenom" id="prenom" value="<?php echo $agence['prenom']; ?>">
                     </div>
                   </div>
                 </div>
@@ -263,38 +289,30 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="adresse" class="form-control-label">Address</label>
-                      <input class="form-control" id="adresse" name="adresse" type="text">
+                      <input class="form-control" id="adresse" name="adresse" type="text" value="<?php echo $agence['adresse']; ?>">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="ville" class="form-control-label">ville</label>
-                      <input class="form-control" type="text" value="New York"  name="ville" id="ville">
+                      <input class="form-control" type="text" value="<?php echo $agence['ville']; ?>"  name="ville" id="ville" >
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="pays" class="form-control-label">pays</label>
-                      <input class="form-control" type="text" value="United States" id="pays" name="pays">
+                      <input class="form-control" type="text" value="<?php echo $agence['pays']; ?>" id="pays" name="pays">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="tel" class="form-control-label">Postal code</label>
-                      <input class="form-control" type="text" name="tel" id="tel" value="437300">
+                      <label for="tel" class="form-control-label">Numer de tel. :</label>
+                      <input class="form-control" type="text" name="tel" id="tel" value="<?php echo $agence['tel']; ?>">
                     </div>
                   </div>
                 </div>
                 <hr class="horizontal dark">
-  <!--              <p class="text-uppercase text-sm">About me</p>-->
-  <!--              <div class="row">-->
-  <!--                <div class="col-md-12">-->
-  <!--                  <div class="form-group">-->
-  <!--                    <label for="example-text-input" class="form-control-label">About me</label>-->
-  <!--                    <input class="form-control" type="text" value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source.">-->
-  <!--                  </div>-->
-  <!--                </div>-->
-  <!--              </div>-->
+
               </div>
             </div>
           </div>
@@ -305,8 +323,11 @@
               </div>
               <div class="text-center mt-4">
                 <label id="uploadBox" class="upload-box">
-                  <input type="file" id="imageInput" accept="image/*" name="image" hidden>
-                  <img id="preview" src="../media/file-uploads.png" alt="file-uploads">
+                  <input type="file" id="imageInput" accept="image/*" name="image" value="<?php echo $agence['image']; ?>" >
+                    <img
+                            id="preview"
+                            src="<?php echo !empty($agence['image']) ? '../media/' . $agence['image'] : '../media/file-uploads.jpg'; ?>"
+                            alt="file-uploads">
                   <p>ajouter l'image se service ici</p>
                 </label>
               </div>

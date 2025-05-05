@@ -5,7 +5,105 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1caf8a3-0d22-48b1-ac53-56735dcfcd52" name="Changes" comment="back office">
-      <change afterPath="$PROJECT_DIR$/back_office/assets/scss/soft-ui-dashboard/bootstrap/_accordion.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_office/media/file-uploads.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_office/pages/ajouter_agence.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_office/pages/liste_categries.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classes/Agence.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classes/Categorie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/css/nucleo-icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/css/nucleo-icons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.eot" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo-icons.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.eot" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.woff" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/fonts/nucleo.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/apple-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/apple-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/bg1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/bg1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/bruce-mars.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/bruce-mars.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-11.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-11.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-6.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-8.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved-8.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved11-small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved11-small.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved11.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved11.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved12.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved12.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved13.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved13.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved14.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved14.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved19.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved19.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved21.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved21.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved5-small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved5-small.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved6-small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved6-small.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved6.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved7.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved7.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved8.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved8.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved9.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/curved9.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/curved-images/white-curved.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/curved-images/white-curved.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/favicon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/home-decor-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/home-decor-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/home-decor-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/home-decor-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/home-decor-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/home-decor-3.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/illustrations/rocket-dark.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/illustrations/rocket-dark.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/illustrations/rocket-white.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/illustrations/rocket-white.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/ivana-square.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/ivana-square.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/ivancik.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/ivancik.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/kal-visuals-square.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/kal-visuals-square.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/logo-ct-dark.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/logo-ct-dark.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/logo-ct.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/logo-ct.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/logos/mastercard.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/logos/mastercard.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/logos/visa.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/logos/visa.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/marie.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/marie.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/small-logos/icon-sun-cloud.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/small-logos/icon-sun-cloud.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/team-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/team-1.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/team-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/team-2.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/team-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/team-3.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/team-4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/team-4.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/angular.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/angular.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/bootstrap.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/bootstrap.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/dribbble.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/dribbble.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/dropbox.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/dropbox.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/mastercard.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/mastercard.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/paypal.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/paypal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/react.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/react.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/sketch.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/sketch.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/slack.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/slack.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/spotify.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/spotify.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/tim.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/tim.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/unass.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/unass.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/visa.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/visa.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/theme/vue.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/theme/vue.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/img/vr-bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/img/vr-bg.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/assets/js/soft-ui-dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/assets/js/soft-ui-dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/media/file-uploads.png" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/media/file-uploads.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/agence.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/agence.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/ajouter_agence.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/update_agence.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/ajouter_service.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/ajouter_service.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/client.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/client.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_office/pages/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/back_office/pages/service.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Restaurant.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Service.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/explore.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/explore.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/service.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service_page/automotion.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/service_page/automotion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service_page/destination.php" beforeDir="false" afterPath="$PROJECT_DIR$/front/service_page/destination.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service_page/hotels.php" beforeDir="false" afterPath="$PROJECT_DIR$/front/service_page/hotels.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service_page/one_service.html" beforeDir="false" afterPath="$PROJECT_DIR$/front/service_page/one_service.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/service_page/resturent.php" beforeDir="false" afterPath="$PROJECT_DIR$/front/service_page/nos_service.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet_php.sql" beforeDir="false" afterPath="$PROJECT_DIR$/projet_php.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +145,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/projet_php/back_office/pages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -61,6 +160,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\projet_php\back_office\pages" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -80,6 +184,8 @@
       <workItem from="1744921128163" duration="13270000" />
       <workItem from="1746043184057" duration="2558000" />
       <workItem from="1746113634092" duration="6564000" />
+      <workItem from="1746207164047" duration="7375000" />
+      <workItem from="1746309562597" duration="41406000" />
     </task>
     <task id="LOCAL-00001" summary="affichage hotel dynamic ok">
       <option name="closed" value="true" />
@@ -121,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746113845447</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="back office">
+      <option name="closed" value="true" />
+      <created>1746208456278</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746208456278</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

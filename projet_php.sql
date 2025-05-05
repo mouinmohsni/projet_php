@@ -117,7 +117,7 @@ CREATE TABLE `utilisateur` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(45) DEFAULT NULL,
   `prenom` varchar(45) DEFAULT NULL,
-  `e-mail` varchar(45) DEFAULT NULL,
+  `e_mail` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `adresse` varchar(45) DEFAULT NULL,
   `gouvernorat` varchar(45) DEFAULT NULL,

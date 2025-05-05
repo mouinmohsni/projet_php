@@ -1,9 +1,31 @@
 <?php
 
-include "../../classes/Restaurant.php";
+include "../../classes/Service.php";
+include "../../classes/Categorie.php";
 
-$restaurants = new Restaurant();
-$lise_restaurants = $restaurants->geAllresturents();
+$id = null ;
+if (isset($_GET["id"])){
+    $id=$_GET["id"];
+}
+
+$limit = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+
+$categries = new Categorie();
+$lise_categories = $categries ->getAllCategories();
+
+$this_categrie = $categries ->getCategoriesById($id);
+
+
+
+$services = new Service();
+$liste_services = $services->getAllOneService($id , $limit , $offset);
+
+// Appel à la méthode pour connaître le nombre total de services
+$totalServices = $services->countnOneServices($id);
+$totalPages = ceil($totalServices / $limit);
 
 
 ?>
@@ -20,13 +42,13 @@ $lise_restaurants = $restaurants->geAllresturents();
 
         <!--font-family-->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-        
+
         <!-- title of site -->
         <title>Directory Landing Page</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png"/>
-       
+
         <!--font-awesome.min.css-->
         <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
 
@@ -42,24 +64,24 @@ $lise_restaurants = $restaurants->geAllresturents();
 		<!--slick.css-->
         <link rel="stylesheet" href="../assets/css/slick.css">
 		<link rel="stylesheet" href="../assets/css/slick-theme.css">
-		
+
         <!--bootstrap.min.css-->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-		
+
 		<!-- bootsnav -->
-		<link rel="stylesheet" href="../assets/css/bootsnav.css" >	
-        
+		<link rel="stylesheet" href="../assets/css/bootsnav.css" >
+
         <!--style.css-->
         <link rel="stylesheet" href="../assets/css/style.css">
-        
+
         <!--responsive.css-->
         <link rel="stylesheet" href="../assets/css/responsive.css">
-        
-    
+
+
 
     </head>
-	
-	<body>	
+
+	<body>
 		<!--header-top start -->
 		<header id="header-top" class="header-top">
 			<ul>
@@ -95,7 +117,7 @@ $lise_restaurants = $restaurants->geAllresturents();
 					</div>
 				</li>
 			</ul>
-					
+
 		</header><!--/.header-top-->
 		<!--header-top end -->
 
@@ -112,7 +134,7 @@ $lise_restaurants = $restaurants->geAllresturents();
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="../index.html">list<span>race</span></a>
+			                <a class="navbar-brand" href="../index.php">list<span>race</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -120,8 +142,8 @@ $lise_restaurants = $restaurants->geAllresturents();
 			            <!-- Collect the nav links, forms, and other content for toggling -->
 			            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li class=" scroll active"><a href="../index.html">home</a></li>
-			                    <li class="scroll"><a href="../service.html">Services</a></li>
+			                    <li class=" scroll active"><a href="../index.php">home</a></li>
+			                    <li class="scroll"><a href="../service.php">Services</a></li>
 			                    <li class="scroll"><a href="../explore.html">explore</a></li>
 			                    <li class="scroll"><a href="../contact.html">contact</a></li>
 			                </ul><!--/.nav -->
@@ -141,14 +163,14 @@ $lise_restaurants = $restaurants->geAllresturents();
 				<div class="welcome-hero-txt">
 					<h2>best place to find and explore <br> that all you need </h2>
 					<p>
-						Find Best Place, Restaurant, Hotel, Real State and many more think in just One click 
+						Find Best Place, Restaurant, Hotel, Real State and many more think in just One click
 					</p>
 				</div>
 				<div class="welcome-hero-serch-box">
 					<div class="welcome-hero-form">
 						<div class="single-welcome-hero-form">
 							<h3>what?</h3>
-							<form action="../index.html">
+							<form action="../index.php">
 								<input type="text" placeholder="Ex: palce, resturent, food, automobile" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -157,7 +179,7 @@ $lise_restaurants = $restaurants->geAllresturents();
 						</div>
 						<div class="single-welcome-hero-form">
 							<h3>location</h3>
-							<form action="../index.html">
+							<form action="../index.php">
 								<input type="text" placeholder="Ex: london, newyork, rome" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -167,7 +189,7 @@ $lise_restaurants = $restaurants->geAllresturents();
 					</div>
 					<div class="welcome-hero-serch">
 						<button class="welcome-hero-btn" onclick="window.location.href='#'">
-							 search  <i data-feather="search"></i> 
+							 search  <i data-feather="search"></i>
 						</button>
 					</div>
 				</div>
@@ -181,42 +203,27 @@ $lise_restaurants = $restaurants->geAllresturents();
 			<div class="container">
 				<div class="list-topics-content">
 					<ul>
+                        <?php
+
+                        while($categorie=$lise_categories->fetch()){
+
+
+
+                        ?>
 						<li>
 							<div class="single-list-topics-content">
 								<div class="single-list-topics-icon">
-									<i class="flaticon-restaurant"></i>
+									<i class="<?php echo $categorie["image"] ?>"></i>
 								</div>
-								<h2><a href="resturent.php">resturent</a></h2>
+                                <h2><a href="../service_page/nos_service.php?id=<?php echo $categorie['Categorie_id']?>"><?php echo $categorie["nom_categorie"] ?> </a></h2>
 								<p>150 listings</p>
 							</div>
 						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-travel"></i>
-								</div>
-								<h2><a href="destination.php">destination</a></h2>
-								<p>214 listings</p>
-							</div>
-						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-building"></i>
-								</div>
-								<h2><a href="hotels.php">hotels</a></h2>
-								<p>185 listings</p>
-							</div>
-						</li>
-						<li>
-							<div class="single-list-topics-content">
-								<div class="single-list-topics-icon">
-									<i class="flaticon-transport"></i>
-								</div>
-								<h2><a href="../service_page/automotion.html">automotion</a></h2>
-								<p>120 listings</p>
-							</div>
-						</li>
+
+                        <?php
+                            }
+                        ?>
+
 					</ul>
 				</div>
 			</div><!--/.container-->
@@ -228,18 +235,18 @@ $lise_restaurants = $restaurants->geAllresturents();
 		<section id="explore" class="explore">
 			<div class="container">
 				<div class="section-header">
-					<h2>resturent</h2>
-					<p>Explore New place, food, culture around the world and many more</p>
+					<h2><?php echo $this_categrie["nom_categorie"] ?></h2>
+					<p><h4><?php echo $this_categrie["description"] ?></h4></p>
 				</div><!--/.section-header-->
 				<div class="explore-content">
 					<div class="row">
 						<?php
-                        while ($one_restaurent = $lise_restaurants->fetch()){
+                        while ($one_services = $liste_services->fetch()){
 						?>
                             <div class="col-md-4 col-sm-6">
                                 <div class="single-explore-item">
                                     <div class="single-explore-img">
-                                        <img src="../assets/images/<?php echo $one_restaurent['url_image']; ?>" alt="explore image">
+                                        <img src="../assets/images/<?php echo $one_services['url_image']; ?>" alt="explore image">
                                         <div class="single-explore-img-info">
                                             <div class="single-explore-image-icon-box">
                                                 <ul>
@@ -258,15 +265,15 @@ $lise_restaurants = $restaurants->geAllresturents();
                                         </div>
                                     </div>
                                     <div class="single-explore-txt bg-theme-2">
-                                        <h2><a href="#"><?php echo $one_restaurent['nom']; ?></a></h2>
+                                        <h2><a href="#"><?php echo $one_services['nom']; ?></a></h2>
                                         <p class="explore-rating-price">
-                                            <span class="explore-rating"><?php echo $one_restaurent['rating']; ?></span>
-                                            <a href="#"> <?php echo $one_restaurent['ratings_count']; ?> ratings</a>
+                                            <span class="explore-rating"><?php echo $one_services['rating']; ?></span>
+                                            <a href="#"> <?php echo $one_services['ratings_count']; ?> ratings</a>
                                             <span class="explore-price-box">
                                                 form
-                                                <span class="explore-price"><?php echo $one_restaurent["prix"];?>$</span>
+                                                <span class="explore-price"><?php echo $one_services["prix"];?>$</span>
                                             </span>
-                                            <a href="#"><?php echo $one_restaurent["nom_categorie"];?></a>
+                                            <a href="#"><?php echo $one_services["nom_categorie"];?></a>
                                         </p>
                                         <div class="explore-person">
                                             <div class="row">
@@ -278,7 +285,8 @@ $lise_restaurants = $restaurants->geAllresturents();
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    <?php echo $one_restaurent["description"];?>
+                                                    <p>
+                                                    <?php echo $one_services["description"];?>
                                                     </p>
                                                 </div>
                                             </div>
@@ -294,7 +302,34 @@ $lise_restaurants = $restaurants->geAllresturents();
 
 					</div>
 				</div>
-			</div><!--/.container-->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <!-- Bouton "Précédent" -->
+                        <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Liens numérotés -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Bouton "Suivant" -->
+                        <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+
+            </div><!--/.container-->
 
 		</section><!--/.explore-->
 
@@ -328,14 +363,14 @@ $lise_restaurants = $restaurants->geAllresturents();
 						<div class="col-sm-7">
 							<div class="footer-social">
 								<span><i class="fa fa-phone"> +1  (222) 777 8888</i></span>
-								<a href="#"><i class="fa fa-facebook"></i></a>	
+								<a href="#"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-twitter"></i></a>
 								<a href="#"><i class="fa fa-linkedin"></i></a>
 								<a href="#"><i class="fa fa-google-plus"></i></a>
 							</div>
 						</div>
 					</div>
-					
+
 				</div><!--/.hm-footer-copyright-->
 			</div><!--/.container-->
 
@@ -343,22 +378,22 @@ $lise_restaurants = $restaurants->geAllresturents();
 				<div class="return-to-top">
 					<i class="fa fa-angle-up " data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
 				</div>
-				
+
 			</div><!--/.scroll-Top-->
-			
+
         </footer><!--/.footer-->
 		<!--footer end-->
-		
+
 		<!-- Include all js compiled plugins (below), or include individual files as needed -->
 
 		<script src="../assets/js/jquery.js"></script>
-        
+
         <!--modernizr.min.js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-		
+
 		<!--bootstrap.min.js-->
         <script src="../assets/js/bootstrap.min.js"></script>
-		
+
 		<!-- bootsnav js -->
 		<script src="../assets/js/bootsnav.js"></script>
 
@@ -373,10 +408,10 @@ $lise_restaurants = $restaurants->geAllresturents();
         <script src="../assets/js/slick.min.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-		     
+
         <!--Custom JS-->
         <script src="../assets/js/custom.js"></script>
-        
+
     </body>
-	
+
 </html>
