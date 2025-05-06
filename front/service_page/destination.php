@@ -87,10 +87,10 @@ $lise_destination = $destination->geAllDestinations();
 								+1 222 777 6565
 							</li>
 							<li class="header-top-contact">
-								<a href="../login.html">sign in</a>
+								<a href="../login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="../login.html">register</a>
+								<a href="../login.php">register</a>
 							</li>
 						</ul>
 					</div>

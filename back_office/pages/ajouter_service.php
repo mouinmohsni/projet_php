@@ -1,3 +1,31 @@
+<?php
+    include "../../classes/Categorie.php";
+    include "../../classes/Service.php";
+
+session_start();
+
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ../../front/login.php');
+        exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+    }else{
+        $user_id = $_SESSION['user_id'];
+    }
+
+    $Categories = new categorie();
+    $allCategories = $Categories->getAllCategories();
+
+    $Services = new Service();
+
+
+    if(isset($_POST['ajouter'])){
+        $Services -> addService($_POST , $_FILES);
+        header('location:service.php');
+        exit();
+    }
+
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +65,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/dashboard.html">
+          <a class="nav-link  " href="dashboard.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>shop </title>
@@ -123,7 +151,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/sign-in.html">
+          <a class="nav-link  " href="../../front/login.php">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>document</title>
@@ -208,7 +236,7 @@
             <div class="d-flex align-items-center">
               <div>
                 <h5 class="mb-1 text-white font-weight-bolder">
-                  Ajouter une agence
+                  Ajouter un Service
                 </h5>
               </div>
             </div>
@@ -218,104 +246,93 @@
     </div>
 
 
-    <div class="container-fluid py-4">
-      <div class="row d-flex">
-        <form action=""  class="row d-flex">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header pb-0">
-                <div class="d-flex align-items-center">
-                  <p class="mb-0">Edit Profile</p>
-                  <button class="btn btn-primary btn-sm ms-auto">Settings</button>
-                </div>
-              </div>
-              <div class="card-body">
-                <p class="text-uppercase text-sm">les infortmain de l'agence </p>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="nom_agence" class="form-control-label">nom de l'agence </label>
-                      <input class="form-control" type="text" value="lucky.jesse" name="nom_agence" id="nom_agence">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="e_mail" class="form-control-label">Email address</label>
-                      <input class="form-control" type="email" value="jesse@example.com"  name="e_mail" id="e_mail">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="nom" class="form-control-label">Nom responsable </label>
-                      <input class="form-control" type="text"  name="nom" id="nom">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="prenom" class="form-control-label">Prenom responsable</label>
-                      <input class="form-control" type="text" name="prenom" id="prenom">
-                    </div>
-                  </div>
-                </div>
-                <hr class="horizontal dark">
-                <p class="text-uppercase text-sm">Contact Information</p>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="adresse" class="form-control-label">Address</label>
-                      <input class="form-control" id="adresse" name="adresse" type="text">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="ville" class="form-control-label">ville</label>
-                      <input class="form-control" type="text" value="New York"  name="ville" id="ville">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="pays" class="form-control-label">pays</label>
-                      <input class="form-control" type="text" value="United States" id="pays" name="pays">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="tel" class="form-control-label">Postal code</label>
-                      <input class="form-control" type="text" name="tel" id="tel" value="437300">
-                    </div>
-                  </div>
-                </div>
-                <hr class="horizontal dark">
-  <!--              <p class="text-uppercase text-sm">About me</p>-->
-  <!--              <div class="row">-->
-  <!--                <div class="col-md-12">-->
-  <!--                  <div class="form-group">-->
-  <!--                    <label for="example-text-input" class="form-control-label">About me</label>-->
-  <!--                    <input class="form-control" type="text" value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source.">-->
-  <!--                  </div>-->
-  <!--                </div>-->
-  <!--              </div>-->
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card-body pt-0">
-              <div class="row">
+      <div class="container-fluid py-4">
+          <div class="row d-flex">
+              <form action="ajouter_service.php" enctype="multipart/form-data"  method="post" class="row d-flex">
+                  <div class="col-md-8">
+                      <div class="card">
+                          <div class="card-header pb-0">
+                              <div class="d-flex align-items-center">
+                                  <button type="submit" name="ajouter" class="btn btn-primary btn-sm ms-auto">ajouter</button>
+                              </div>
+                          </div>
+                          <div class="card-body">
+                              <p class="text-uppercase text-sm">les Informations du Service   </p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">Nom du Service  </label>
+                                          <input class="form-control" type="text" name="nom" id="nom">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="Categorie_id" class="form-control-label">Categorie</label>
+                                          <select class="form-select" aria-label="Default select example" name="Categorie_id" id="Categorie_id">
 
-              </div>
-              <div class="text-center mt-4">
-                <label id="uploadBox" class="upload-box">
-                  <input type="file" id="imageInput" accept="image/*" name="image" hidden>
-                  <img id="preview" src="../media/file-uploads.jpg" alt="file-uploads">
-                  <p>ajouter l'image se service ici</p>
-                </label>
-              </div>
-            </div>
+                                              <option selected>Choisir une Categorie </option>
+                                              <?php
+                                              while($categorie = $allCategories ->fetch()){
+                                              ?>
+                                              <option value=" <?php echo $categorie["Categorie_id"] ?>"><?php echo $categorie["nom_categorie"] ?></option>
+
+                                              <?php } ?>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">prix </label>
+                                          <input class="form-control" type="text"  name="prix" id="prix">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <input class="form-control" type="hidden" name="user_id" id="user_id" value="<?php echo $user_id?>">
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr class="horizontal dark">
+                              <p class="text-uppercase text-sm">Contact Information</p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="adresse" class="form-control-label">Address</label>
+                                          <input class="form-control" id="adresse" name="adresse" type="text">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="description" class="form-control-label">Description</label>
+                                          <textarea class="form-control" type="text"   name="description" id="description"></textarea>
+                                      </div>
+                                  </div>
+
+                                  </div>
+                              </div>
+                              <hr class="horizontal dark">
+
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="card-body pt-0">
+                              <div class="row">
+
+                              </div>
+                              <div class="text-center mt-4">
+                                  <label id="uploadBox" class="upload-box">
+                                      <input type="file" id="imageInput" accept="image/*" name="url_image" >
+                                      <img id="preview" src="../media/file-uploads.jpg" alt="file-uploads">
+
+                                  </label>
+                                  <p>ajouter l'image de service ici</p>
+                              </div>
+                          </div>
+                      </div>
+              </form>
           </div>
-        </form>
+
       </div>
-
-    </div>
 
 
 

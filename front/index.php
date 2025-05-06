@@ -87,10 +87,10 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 					<div class="header-top-right">
 						<ul>
 							<li class="header-top-contact">
-								<a href="./login.html">sign in</a>
+								<a href="login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="./register.html">register</a>
+								<a href="register.php">register</a>
 							</li>
 						</ul>
 					</div>
@@ -853,7 +853,7 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 			                    <li class="scroll"><a href="service.php">Services</a></li>
 			                    <li class="scroll"><a href="./explore.html">explore</a></li>
 			                    <li class="scroll"><a href="./contact.html">contact</a></li>
-			                    <li class=" scroll"><a href="./login.html">my account</a></li>
+			                    <li class=" scroll"><a href="login.php">my account</a></li>
 			                </ul><!--/.nav -->
 			           	</div>
 		           </div>

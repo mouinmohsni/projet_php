@@ -1,3 +1,41 @@
+<?php
+
+// Assure-toi que la session est démarrée
+if (session_status() === PHP_SESSION_NONE) {
+session_start();
+}
+
+include "../classes/User.php";
+$Users = new User();
+$msg="";
+if(isset($_POST["login"])){
+    $user = $Users ->getUserWithMail($_POST);
+    if ($user) {
+        $password =$user["password"];
+        $userPassword=md5($_POST["password"]);
+        var_dump($password);
+        var_dump($userPassword);
+
+
+        if( ($userPassword=$password)){
+            $_SESSION["user_id"] = $user["user_id"];
+            $_SESSION["nom"] = $user["nom"];
+            if($user["role"]=="user"){
+                header("Location: index.php");
+            }else{
+                header("Location: ../back_office/pages/dashboard.php");
+            }
+
+        }else{
+            $msg="mail ou mot de passe incorrect";
+        }
+    }
+    else{
+        $msg="mail ou mot de passe incorrect";
+    }
+
+}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -50,6 +88,7 @@
 	</head>
 
 	<body>
+
 		<!--header-top start -->
 		<header id="header-top" class="header-top">
 			<ul>
@@ -71,10 +110,10 @@
 					<div class="header-top-right">
 						<ul>
 							<li class="header-top-contact">
-								<a href="./login.html">sign in</a>
+								<a href="login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="./register.html">register</a>
+								<a href="register.php">register</a>
 							</li>
 						</ul>
 					</div>
@@ -82,7 +121,6 @@
 			</ul>
 					
 		</header><!--/.header-top-->
-		
 
 		<section class="top-area">
 			<div class="header-area">
@@ -123,41 +161,25 @@
 				<div class="image-holder">
 					<img src="./assets/images/explore/e6.jpg" alt="">
 				</div>
-				<form action="">
-					<h3>Registration Form</h3>
-					<div class="form-group">
-						<input type="text" placeholder="First Name" class="form-control">
-						<input type="text" placeholder="Last Name" class="form-control">
-					</div>
+				<form action="login.php" method="post">
+					<h3>Login</h3>
+					
 					<div class="form-wrapper">
-						<input type="text" placeholder="Username" class="form-control">
-						<i class="zmdi zmdi-account"></i>
-					</div>
-					<div class="form-wrapper">
-						<input type="text" placeholder="Email Address" class="form-control">
+						<input type="text" placeholder="Email Address" class="form-control" name="e_mail" id="e_mail">
 						<i class="zmdi zmdi-email"></i>
 					</div>
+					
 					<div class="form-wrapper">
-						<select name="" id="" class="form-control">
-							<option value="" disabled selected>Gender</option>
-							<option value="male">Male</option>
-							<option value="femal">Female</option>
-							<option value="other">Other</option>
-						</select>
-						<i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
-					</div>
-					<div class="form-wrapper">
-						<input type="password" placeholder="Password" class="form-control">
+						<input type="password" placeholder="Password" class="form-control" id="password" name="password">
 						<i class="zmdi zmdi-lock"></i>
 					</div>
-					<div class="form-wrapper">
-						<input type="password" placeholder="Confirm Password" class="form-control">
-						<i class="zmdi zmdi-lock"></i>
-					</div>
-					<button>Register
-						<i class="zmdi zmdi-arrow-right"></i>
-					</button>
-				</form>
+
+
+                    <p class="explore-price"> <?php  echo $msg?> </p>
+
+                    <button type="submit" name="login" class="welcome-hero-btn" >Login</button>
+
+                </form>
 			</div>
 		</div>
 
@@ -177,7 +199,7 @@
 			                    <li class="scroll"><a href="service.php">Services</a></li>
 			                    <li class="scroll"><a href="./explore.html">explore</a></li>
 			                    <li class="scroll"><a href="./contact.html">contact</a></li>
-			                    <li class=" scroll"><a href="./login.html">my account</a></li>
+			                    <li class=" scroll"><a href="login.php">my account</a></li>
 			                </ul><!--/.nav -->
 			           	</div>
 		           </div>
@@ -199,7 +221,7 @@
 				</div><!--/.hm-footer-copyright-->
 			</div><!--/.container-->
 
-			<div id="scroll-Top">
+			<div>
 				<div class="return-to-top">
 					<i class="fa fa-angle-up " id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
 				</div>

@@ -1,3 +1,43 @@
+<?php
+// Assure-toi que la session est démarrée
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include "../classes/User.php";
+
+$allpays = ["Afghanistan", "Afrique du Sud", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Arabie Saoudite", "Argentine", "Arménie", "Australie", "Autriche",  "Azerbaïdjan", "Belgique", "Bénin", "Biélorussie", "Bolivie", "Bosnie-Herzégovine", "Botswana", "Brésil", "Bulgarie", "Burkina Faso", "Cameroun", "Canada", "Chili", "Chine", "Chypre", "Colombie", "Comores", "Congo", "Corée du Nord", "Corée du Sud", "Costa Rica", "Croatie", "Cuba", "Danemark", "Djibouti", "Égypte",
+        "Émirats arabes unis", "Équateur", "Espagne", "Estonie", "États-Unis", "Éthiopie", "Finlande", "France", "Gabon", "Gambie", "Géorgie", "Ghana", "Grèce", "Guinée", "Haïti", "Hongrie", "Inde", "Indonésie", "Irak", "Iran", "Irlande", "Islande", "Israël", "Italie", "Japon", "Jordanie", "Kazakhstan", "Kenya", "Koweït", "Lettonie", "Liban", "Libye", "Lituanie", "Luxembourg", "Madagascar", "Malaisie", "Mali", "Malte", "Maroc", "Mauritanie", "Mexique", "Monaco", "Mongolie", "Mozambique", "Namibie", "Népal", "Niger",
+        "Nigéria", "Norvège", "Nouvelle-Zélande", "Oman", "Ouzbékistan", "Pakistan", "Palestine", "Panama", "Paraguay", "Pays-Bas", "Pérou", "Philippines", "Pologne", "Portugal", "Qatar", "République Centrafricaine", "République Tchèque", "Roumanie", "Royaume-Uni", "Russie", "Rwanda", "Sénégal", "Serbie", "Singapour", "Slovaquie", "Slovénie", "Somalie", "Soudan", "Sri Lanka", "Suède", "Suisse", "Syrie", "Tanzanie", "Tchad", "Thaïlande", "Tunisie", "Turquie", "Ukraine", "Uruguay", "Venezuela", "Viêt Nam", "Yémen", "Zambie", "Zimbabwe"
+];
+
+$Users = new User();
+
+$msg_password="";
+$msg_mail="";
+if (isset($_POST["ajouter"])){
+    if (($_POST["password"] != $_POST["confirm_password"]) or ($_POST["password"]=="")){
+        $msg_password ="mot de passe incorrect";
+
+    }else{
+        $user = $Users ->getUserWithMail($_POST);
+        if ($user){
+            $msg_mail="adresse mail deja existante";
+        }else{
+            $userId = $Users ->addUser($_POST);
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['user_name'] = $_POST["nom"];
+
+            header('Location: index.php');
+
+        }
+
+    }
+
+
+}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -50,7 +90,6 @@
 	</head>
 
 	<body>
-
 		<!--header-top start -->
 		<header id="header-top" class="header-top">
 			<ul>
@@ -72,10 +111,10 @@
 					<div class="header-top-right">
 						<ul>
 							<li class="header-top-contact">
-								<a href="./login.html">sign in</a>
+								<a href="login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="./register.html">register</a>
+								<a href="register.php">register</a>
 							</li>
 						</ul>
 					</div>
@@ -83,6 +122,7 @@
 			</ul>
 					
 		</header><!--/.header-top-->
+		
 
 		<section class="top-area">
 			<div class="header-area">
@@ -123,22 +163,50 @@
 				<div class="image-holder">
 					<img src="./assets/images/explore/e6.jpg" alt="">
 				</div>
-				<form action="">
-					<h3>Login</h3>
-					
-					<div class="form-wrapper">
-						<input type="text" placeholder="Email Address" class="form-control">
-						<i class="zmdi zmdi-email"></i>
+				<form action="register.php" method="post">
+					<h3>Registration Form</h3>
+					<div class="form-group">
+						<input type="text" placeholder="First Name" class="form-control" id="nom" name="nom">
+						<input type="text" placeholder="Last Name" class="form-control" id="prenom" name="prenom">
 					</div>
-					
+                    <div class="form-wrapper">
+                        <input type="text" placeholder="Email Address" class="form-control" id="e_mail" name="e_mail">
+                        <i class="zmdi zmdi-email"></i>
+                        <p class="explore-price mb-2" > <?php echo $msg_mail ?> </p>
+                    </div>
+                    <div class="form-wrapper">
+                        <input type="password" placeholder="Password" class="form-control" id="password" name="password">
+                        <i class="zmdi zmdi-lock"></i>
+                    </div>
+                    <div class="form-wrapper">
+                        <input type="password" placeholder="Confirm Password" class="form-control" name="confirm_password">
+                        <i class="zmdi zmdi-lock"></i>
+                        <p class="explore-price"> <?php  echo $msg_password?> </p>
+                    </div>
+
 					<div class="form-wrapper">
-						<input type="password" placeholder="Password" class="form-control">
-						<i class="zmdi zmdi-lock"></i>
+
+                        <input type="text" placeholder="adresse" class="form-control" name="adresse" id="adresse">
+                        <i class="zmdi zmdi-account"></i>
+                    </div>
+					<div class="form-wrapper">
+						<select name="pays" id="pays" class="form-control">
+							<option value="" disabled selected>pays</option>
+                            <?php
+                            foreach ($allpays as $pays)
+                            {
+                            ?>
+							<option value="<?php echo  $pays?>"><?php echo  $pays?></option>
+                            <?php } ?>
+						</select>
+						<i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
 					</div>
-					
-					<button>login
-						<i class="zmdi zmdi-arrow-right"></i>
-					</button>
+                    <div class="form-group">
+                        <input type="text" placeholder="ville" class="form-control" id="ville" name="ville">
+                        <input type="text" placeholder="5552455245" class="form-control" id="tel" name="tel">
+                    </div>
+
+					<button type="submit" name="ajouter" class="welcome-hero-btn" >Register</button>
 				</form>
 			</div>
 		</div>
@@ -159,7 +227,7 @@
 			                    <li class="scroll"><a href="service.php">Services</a></li>
 			                    <li class="scroll"><a href="./explore.html">explore</a></li>
 			                    <li class="scroll"><a href="./contact.html">contact</a></li>
-			                    <li class=" scroll"><a href="./login.html">my account</a></li>
+			                    <li class=" scroll"><a href="login.php">my account</a></li>
 			                </ul><!--/.nav -->
 			           	</div>
 		           </div>

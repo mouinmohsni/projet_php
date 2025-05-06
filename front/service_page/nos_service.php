@@ -3,9 +3,9 @@
 include "../../classes/Service.php";
 include "../../classes/Categorie.php";
 
-$id = null ;
+$id_categorie = null ;
 if (isset($_GET["id"])){
-    $id=$_GET["id"];
+    $id_categorie=$_GET["id"];
 }
 
 $limit = 6;
@@ -16,15 +16,15 @@ $offset = ($page - 1) * $limit;
 $categries = new Categorie();
 $lise_categories = $categries ->getAllCategories();
 
-$this_categrie = $categries ->getCategoriesById($id);
+$this_categrie = $categries ->getCategoriesById($id_categorie);
 
 
 
 $services = new Service();
-$liste_services = $services->getAllOneService($id , $limit , $offset);
+$liste_services = $services->getAllOneService($id_categorie , $limit , $offset);
 
 // Appel à la méthode pour connaître le nombre total de services
-$totalServices = $services->countnOneServices($id);
+$totalServices = $services->countnOneServices($id_categorie);
 $totalPages = ceil($totalServices / $limit);
 
 
@@ -108,10 +108,10 @@ $totalPages = ceil($totalServices / $limit);
 								+1 222 777 6565
 							</li>
 							<li class="header-top-contact">
-								<a href="../login.html">sign in</a>
+								<a href="../login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="../login.html">register</a>
+								<a href="../login.php">register</a>
 							</li>
 						</ul>
 					</div>
@@ -246,7 +246,7 @@ $totalPages = ceil($totalServices / $limit);
                             <div class="col-md-4 col-sm-6">
                                 <div class="single-explore-item">
                                     <div class="single-explore-img">
-                                        <img src="../assets/images/<?php echo $one_services['url_image']; ?>" alt="explore image">
+                                        <img src="../../back_office/media/service/<?php echo $one_services['url_image']; ?>" alt="explore image">
                                         <div class="single-explore-img-info">
                                             <div class="single-explore-image-icon-box">
                                                 <ul>
@@ -306,7 +306,7 @@ $totalPages = ceil($totalServices / $limit);
                     <ul class="pagination justify-content-center">
                         <!-- Bouton "Précédent" -->
                         <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                            <a class="page-link" href="?id=<?= $id_categorie?>&page=<?= $page - 1 ?>" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -314,13 +314,13 @@ $totalPages = ceil($totalServices / $limit);
                         <!-- Liens numérotés -->
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                <a class="page-link" href="?id=<?= $id_categorie?>&page=<?= $i ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
 
                         <!-- Bouton "Suivant" -->
                         <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                            <a class="page-link" href="?id=<?= $id_categorie?>&page=<?= $page + 1 ?>" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
