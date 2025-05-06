@@ -4,7 +4,7 @@
 include "../classes/Categorie.php";
 
 $categries = new Categorie();
-$lise_categories = $categries ->getAllCategories();
+$lise_categories = $categries ->getAllCategoriesWithServiceCount();
 
 
 
@@ -56,8 +56,11 @@ $lise_categories = $categries ->getAllCategories();
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
-    
+
+        <link href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css" rel="stylesheet">
+
+
+
 
     </head>
 	
@@ -192,7 +195,8 @@ $lise_categories = $categries ->getAllCategories();
                                         <i class="<?php echo $categorie["image"] ?>"></i>
                                     </div>
                                     <h2><a href="service_page/nos_service.php?id=<?php echo $categorie['Categorie_id']?>"><?php echo $categorie["nom_categorie"] ?> </a></h2>
-                                    <p>150 listings</p>
+                                    <p><?php echo $categorie['service_count']?> Services</p>
+
                                 </div>
                             </li>
 
