@@ -66,11 +66,6 @@ class Agence
                                                      values ('$nom_agence','$nom' , '$prenom', '$e_mail' ,'$password', '$adresse', '$ville', '$pays', '$role', '$tel', '$imageName');");
 
 
-
-
-
-
-
     }
 
     function deleteAgence($id){
