@@ -27,8 +27,9 @@ if (isset($_POST["ajouter"])){
             $userId = $Users ->addUser($_POST);
             $_SESSION['user_id'] = $userId;
             $_SESSION['user_name'] = $_POST["nom"];
+            $_SESSION["role"] = "user";
 
-            header('Location: index.php');
+            header('Location: login.php');
 
         }
 

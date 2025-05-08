@@ -13,13 +13,13 @@ if(isset($_POST["login"])){
     if ($user) {
         $password =$user["password"];
         $userPassword=md5($_POST["password"]);
-        var_dump($password);
-        var_dump($userPassword);
+
 
 
         if( ($userPassword=$password)){
             $_SESSION["user_id"] = $user["user_id"];
             $_SESSION["nom"] = $user["nom"];
+            $_SESSION["role"] = $user["role"];
             if($user["role"]=="user"){
                 header("Location: index.php");
             }else{

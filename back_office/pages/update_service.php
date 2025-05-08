@@ -1,16 +1,37 @@
 <?php
-include  "../../classes/Agence.php";
+    include "../../classes/Categorie.php";
+    include "../../classes/Service.php";
 
-$agences = new Agence();
-$liste_agences = $agences -> getAllAgences();
+session_start();
 
-if (isset($_GET['id'])){
-    $id = $_GET['id'];
-    $agences->deleteAgence($id);
-    header("location:agence.php");
-}
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ../../front/login.php');
+        exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+    }else{
+        $user_id = $_SESSION['user_id'];
+    }
+
+    $Categories = new Categorie();
+    $allCategories = $Categories->getAllCategories();
+
+    $Services = new Service();
+
+    if (isset($_GET["id"])){
+        $Service_Id = $_GET["id"];
+        $oneService = $Services->getServiceById($Service_Id);
+    }
+
+
+if(isset($_POST['update'])){
+        $Services -> updateService($_POST , $_FILES);
+        header('location:service.php');
+        exit();
+    }
+
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +57,7 @@ if (isset($_GET['id'])){
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show bg-gray-100">
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -231,12 +252,12 @@ if (isset($_GET['id'])){
     </div>
 
 </aside>
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <div class="main-content position-relative max-height-vh-100 h-100">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <h6 class="font-weight-bolder mb-0">Agences</h6>
+          <h6 class="font-weight-bolder mb-0">Modifier service</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -263,350 +284,127 @@ if (isset($_GET['id'])){
       </div>
     </nav>
     <!-- End Navbar -->
-
-
-
-
-
-
-
-
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
-            <div class="col-xl-6 mb-xl-0 mb-4">
-              <div class="card bg-transparent shadow-xl">
-                <div class="overflow-hidden position-relative border-radius-xl" style="background-image: url('../assets/img/curved-images/curved14.jpg');">
-                  <span class="mask bg-gradient-dark"></span>
-                  <div class="card-body position-relative z-index-1 p-3">
-                    <i class="fas fa-wifi text-white p-2"></i>
-                    <h5 class="text-white mt-4 mb-5 pb-2">4562&nbsp;&nbsp;&nbsp;1122&nbsp;&nbsp;&nbsp;4594&nbsp;&nbsp;&nbsp;7852</h5>
-                    <div class="d-flex">
-                      <div class="d-flex">
-                        <div class="me-4">
-                          <p class="text-white text-sm opacity-8 mb-0">Card Holder</p>
-                          <h6 class="text-white mb-0">Jack Peterson</h6>
-                        </div>
-                        <div>
-                          <p class="text-white text-sm opacity-8 mb-0">Expires</p>
-                          <h6 class="text-white mb-0">11/22</h6>
-                        </div>
-                      </div>
-                      <div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-                        <img class="w-60 mt-2" src="../assets/img/logos/mastercard.png" alt="logo">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <div class="container-fluid">
+      <div class="page-header min-height-250 border-radius-lg mt-4 d-flex flex-column justify-content-end">
+        <span class="mask bg-primary opacity-9"></span>
+        <div class="w-100 position-relative p-3">
+          <div class="d-flex justify-content-between align-items-end">
+            <div class="d-flex align-items-center">
+              <div>
+                <h5 class="mb-1 text-white font-weight-bolder">
+                  Modifier un Service
+                </h5>
               </div>
-            </div>
-            <div class="col-xl-6">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="card">
-                    <div class="card-header mx-4 p-3 text-center">
-                      <div class="icon icon-shape icon-lg bg-primary shadow text-center border-radius-lg">
-                        <i class="fas fa-landmark opacity-10"></i>
-                      </div>
-                    </div>
-                    <div class="card-body pt-0 p-3 text-center">
-                      <h6 class="text-center mb-0">Salary</h6>
-                      <span class="text-xs">Belong Interactive</span>
-                      <hr class="horizontal dark my-3">
-                      <h5 class="mb-0">+$2000</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mt-md-0 mt-4">
-                  <div class="card">
-                    <div class="card-header mx-4 p-3 text-center">
-                      <div class="icon icon-shape icon-lg bg-primary shadow text-center border-radius-lg">
-                        <i class="fab fa-paypal opacity-10"></i>
-                      </div>
-                    </div>
-                    <div class="card-body pt-0 p-3 text-center">
-                      <h6 class="text-center mb-0">Paypal</h6>
-                      <span class="text-xs">Freelance Payment</span>
-                      <hr class="horizontal dark my-3">
-                      <h5 class="mb-0">$455.00</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12 mb-lg-0 mb-4">
-              <div class="card mt-4">
-                <div class="card-header pb-0 p-3">
-                  <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                      <h6 class="mb-0">L'agence le plus actif </h6>
-                    </div>
-                    <div class="col-6 text-end">
-                      <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="fas fa-plus"></i>&nbsp;&nbsp;cree nouveau agence </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body p-3">
-                  <div class="row">
-                    <div class="col-md-6 mb-md-0 mb-4">
-                      <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
-                        <img class="w-10 me-3 mb-0" src="../assets/img/logos/mastercard.png" alt="logo">
-                        <h6 class="mb-0">****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;7852</h6>
-                        <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Card"></i>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
-                        <img class="w-10 me-3 mb-0" src="../assets/img/logos/visa.png" alt="logo">
-                        <h6 class="mb-0">****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;5248</h6>
-                        <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Card"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="card h-100">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Invoices</h6>
-                </div>
-                <div class="col-6 text-end">
-                  <button class="btn btn-outline-primary btn-sm mb-0">View All</button>
-                </div>
-              </div>
-            </div>
-            <div class="card-body p-3 pb-0">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">March, 01, 2020</h6>
-                    <span class="text-xs">#MS-415646</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $180
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">February, 10, 2021</h6>
-                    <span class="text-xs">#RV-126749</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $250
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">April, 05, 2020</h6>
-                    <span class="text-xs">#FB-212562</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $560
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">June, 25, 2019</h6>
-                    <span class="text-xs">#QW-103578</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $120
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-dark mb-1 font-weight-bold text-sm">March, 01, 2019</h6>
-                    <span class="text-xs">#AR-803481</span>
-                  </div>
-                  <div class="d-flex align-items-center text-sm">
-                    $300
-                    <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-                  </div>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-7 mt-4">
-          <div class="card">
-            <div class="card-header pb-0 px-3">
-              <h6 class="mb-0">liste des agence Agences</h6>
-            </div>
-            <div class="card-body pt-4 p-3">
-
-              <ul class="list-group">
-                  <?php
-                  while ($agence =$liste_agences->fetch()){
-                      ?>
-                        <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                          <div class="d-flex flex-column">
-                            <h6 class="mb-3 text-sm"><?php echo $agence["nom_agence"]?></h6>
-                            <span class="mb-2 text-xs">Nom du responsable : <span class="text-dark font-weight-bold ms-sm-2"><?php echo $agence["nom"] ?></span></span>
-                            <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold"><?php echo $agence["e_mail"] ?></span></span>
-                            <span class="text-xs">Number tel: <span class="text-dark ms-sm-2 font-weight-bold"><?php echo $agence["tel"] ?></span></span>
-                          </div>
-                          <div class="ms-auto text-end">
-                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="?id=<?php echo $agence["user_id"] ?>"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="update_agence.php?id=<?php echo $agence["user_id"] ?>"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                          </div>
-                        </li>
-                  <?php
-                  }
-                  ?>
-
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-5 mt-4">
-          <div class="card h-100 mb-4">
-            <div class="card-header pb-0 px-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <h6 class="mb-0">Your Transaction's</h6>
-                </div>
-                <div class="col-md-6 d-flex justify-content-end align-items-center">
-                  <i class="far fa-calendar-alt me-2"></i>
-                  <small>23 - 30 March 2020</small>
-                </div>
-              </div>
-            </div>
-            <div class="card-body pt-4 p-3">
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-down"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Netflix</h6>
-                      <span class="text-xs">27 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                    - $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Apple</h6>
-                      <span class="text-xs">27 March 2020, at 04:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,000
-                  </div>
-                </li>
-              </ul>
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Yesterday</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Stripe</h6>
-                      <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 750
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">HubSpot</h6>
-                      <span class="text-xs">26 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 1,000
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-arrow-up"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Creative Tim</h6>
-                      <span class="text-xs">26 March 2020, at 08:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,500
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-3 btn-sm d-flex align-items-center justify-content-center"><i class="fas fa-exclamation"></i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Webflow</h6>
-                      <span class="text-xs">26 March 2020, at 05:00 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-dark text-sm font-weight-bold">
-                    Pending
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                made with <i class="fa fa-heart"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                for a better web.
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                </li>
-                <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
-  </main>
+
+
+      <div class="container-fluid py-4">
+          <div class="row d-flex">
+              <form action="update_service.php" enctype="multipart/form-data"  method="post" class="row d-flex">
+                  <div class="col-md-8">
+                      <div class="card">
+                          <div class="card-header pb-0">
+                              <div class="d-flex align-items-center">
+                                  <button type="submit" name="update" class="btn btn-primary btn-sm ms-auto">modifier</button>
+                              </div>
+                          </div>
+                          <div class="card-body">
+                              <p class="text-uppercase text-sm">les Informations du Service   </p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">Nom du Service  </label>
+                                          <input class="form-control" type="text" name="nom" id="nom" value="<?php echo $oneService['nom'] ; ?>">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="Categorie_id" class="form-control-label">Categorie</label>
+
+                                          <select class="form-select" aria-label="Default select example" name="Categorie_id" id="Categorie_id">
+                                              <option disabled>Choisir une Categorie</option>
+                                              <?php while($categorie = $allCategories->fetch()): ?>
+                                                  <option value="<?= $categorie["Categorie_id"] ?>"
+                                                      <?= $oneService['Categorie_id'] == $categorie["Categorie_id"] ? 'selected' : '' ?>>
+                                                      <?= $categorie["nom_categorie"] ?>
+                                                  </option>
+                                              <?php endwhile; ?>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">prix </label>
+                                          <input class="form-control" type="text"  name="prix" id="prix" value="<?php echo $oneService['prix'] ; ?>" >
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <input class="form-control" type="text" name="Service_Id" id="Service_Id" value="<?php echo $oneService['Service_Id'] ;?>">
+
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr class="horizontal dark">
+                              <p class="text-uppercase text-sm">Contact Information</p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="adresse" class="form-control-label">Address</label>
+                                          <input class="form-control" id="adresse" name="adresse" type="text" value="<?php echo $oneService['adresse'] ; ?>">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="description" class="form-control-label">Description</label>
+                                          <textarea class="form-control" type="text"   name="description" id="description"><?php echo $oneService['description'] ; ?></textarea>
+                                      </div>
+                                  </div>
+
+                                  </div>
+                              </div>
+                              <hr class="horizontal dark">
+
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="card-body pt-0">
+                              <div class="row">
+
+                              </div>
+                              <div class="text-center mt-4">
+                                  <label id="uploadBox" class="upload-box">
+                                      <input type="file" id="imageInput" accept="image/*" hidden value="<?php echo $oneService['description'] ; ?>" name="url_image" >
+                                      <img
+                                              id="preview"
+                                              src="<?php echo !empty($oneService['url_image']) ? '../media/service/' . $oneService['url_image'] : '../media/file-uploads.jpg'; ?>"
+                                              alt="file-uploads">
+
+                                  </label>
+                                  <p>modifier l'image de service ici</p>
+                              </div>
+                          </div>
+                      </div>
+              </form>
+
+
+          </div>
+
+      </div>
+
+
+
+  </div>
 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -620,6 +418,7 @@ if (isset($_GET['id'])){
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+  <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

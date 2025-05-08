@@ -45,7 +45,7 @@ class Agence
         if (isset($files['image']) && $files['image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['image']['tmp_name'];
             $imageName = basename($files['image']['name']);
-            $destination = '../media/' . $imageName;
+            $destination = '../media/agence/' . $imageName;
 
             // Vérifier l'extension du fichier pour éviter les fichiers non-images
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -75,7 +75,7 @@ class Agence
 
 
 
-    function updateAgence($data){
+    function updateAgence($data , $files){
 
         $user_id = $data['user_id'];
         $nom_agence= $data['nom_agence'];
@@ -88,7 +88,6 @@ class Agence
         $tel= $data['tel'];
         $updated_at = date('Y-m-d H:i:s');
 
-        var_dump("nom_agence aaaa " .$nom_agence);
 
         $imageName   = null; // Par défaut, aucune image n'est mise à jour
 
@@ -96,36 +95,36 @@ class Agence
         if (isset($files['image']) && $files['image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['image']['tmp_name'];
             $imageName = basename($files['image']['name']);
-            $destination = '../media/' . $imageName;
+            $destination = '../media/agence/' . $imageName;
 
             // Vérifier l'extension du fichier pour éviter les fichiers non-images
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
 
             if (in_array($ext, $allowedTypes)) {
-                move_uploaded_file($tmpPath, $destination); // Déplace le fichier dans /media
+                move_uploaded_file($tmpPath, $destination);
             } else {
                 echo "Type de fichier non autorisé.";
                 return false;
             }
         } else {
             // Si aucune nouvelle image, on conserve l'ancienne (optionnel selon logique métier)
-            $imageName = $data['image']; // on récupère l'image existante du formulaire caché
+            $imageName = "file-uploads.jpg"; // on récupère l'image existante du formulaire caché
         }
 
 
 
 
-        // Exécuter la requête
+//         Exécuter la requête
         $this->db->exec("UPDATE utilisateur SET nom_agence='$nom_agence' ,
                                                         nom='$nom',
-                                                        prenom='$prenom', 
-                                                        adresse='$adresse', 
-                                                        e_mail='$e_mail', 
-                                                        ville='$ville', 
-                                                        pays='$pays', 
-                                                        tel='$tel', 
-                                                        image='$imageName', 
+                                                        prenom='$prenom',
+                                                        adresse='$adresse',
+                                                        e_mail='$e_mail',
+                                                        ville='$ville',
+                                                        pays='$pays',
+                                                        tel='$tel',
+                                                        image='$imageName',
                                                         updated_at='$updated_at'
                                                         WHERE user_id='$user_id'");
 

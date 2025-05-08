@@ -13,7 +13,7 @@ $lise_categories = $categries ->getAllCategories();
 
 
 $services = new Service();
-$liste_services = $services->geAllservices($limit, $offset);
+$liste_services = $services->getAllServicesForUsers($limit, $offset);
 
 // Appel à la méthode pour connaître le nombre total de services
 $totalServices = $services->countAllServices();
