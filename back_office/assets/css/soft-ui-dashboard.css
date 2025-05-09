@@ -27965,4 +27965,46 @@ pre[class*=language-] {
   }
 }
 
+
+
+/*.star-rating {*/
+/*  direction: rtl;*/
+/*  display: inline-flex;*/
+/*}*/
+/*.star-rating input[type="radio"] {*/
+/*  display: none;*/
+/*}*/
+/*.star-rating label {*/
+/*  font-size: 2rem;*/
+/*  color: gray;*/
+/*  cursor: pointer;*/
+/*}*/
+/*.star-rating input[type="radio"]:checked ~ label {*/
+/*  color: gold;*/
+/*}*/
+
+
+.star-rating {
+  direction: rtl; /* Inverse l'ordre d'affichage pour que les étoiles soient dans l'ordre naturel */
+  display: inline-flex;
+}
+
+.star-rating input[type="radio"] {
+  display: none; /* Cache les radio */
+}
+
+.star-rating label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: gold;
+}
+
+
 /*# sourceMappingURL=dashboard-free.css.map */

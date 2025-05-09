@@ -1,6 +1,12 @@
 <?php
 include  "../../classes/Agence.php";
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../../front/login.php');
+    exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+}
+
+
 $agences = new Agence();
 $liste_agences = $agences -> getAllAgences();
 
@@ -17,6 +23,7 @@ if (isset($_POST['update'])) {
 
         $agences -> updateAgence($_POST , $_FILES);
     header("location:agence.php");
+    exit();
 }
 ?>
 

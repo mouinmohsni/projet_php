@@ -26,6 +26,13 @@ class User
        return $query ->fetch(); // fetch() ici est sur le PDOStatement, c’est correct
 
    }
+    function getUserById($id)
+    {
+        $sql = "SELECT * FROM utilisateur WHERE user_id = '$id'";
+
+        return $this -> db -> query($sql) ->fetch() ;
+
+    }
 
    function addUser($data){
        $nom=$data['nom'];

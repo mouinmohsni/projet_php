@@ -1,5 +1,12 @@
 <?php
 include "../../classes/Categorie.php";
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../../front/login.php');
+    exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+}
+
 
 $categories = new Categorie();
 
@@ -10,6 +17,7 @@ if (isset($_GET["id"])){
     $id = $_GET["id"];
     $categories -> deleteCategorie($id);
     header("location:liste_categries.php");
+    exit();
 }
 
 

@@ -1,11 +1,5 @@
 <?php
 session_start();
-include "../../classes/Service.php";
-$Service = new Service();
-
-
-
-
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../../front/login.php');
@@ -14,6 +8,10 @@ if (!isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $user_role = $_SESSION['role'];
 }
+
+include "../../classes/Service.php";
+$Service = new Service();
+
 
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

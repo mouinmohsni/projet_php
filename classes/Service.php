@@ -18,7 +18,6 @@ class Service
 
 
     function getAllServicesForUsers($limit , $offset){
-      //  $sql = "SELECT * FROM service LIMIT $limit OFFSET $offset";
 
         $sql = "SELECT service.*, categorie.nom_categorie AS nom_categorie
         FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id
@@ -65,8 +64,9 @@ class Service
 
 
     function getAllOneService($id , $limit , $offset){
-        $sql = "SELECT service.*, categorie.nom_categorie AS nom_categorie
-        FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id
+        $sql = "SELECT service.*, categorie.nom_categorie AS nom_categorie ,utilisateur.image as logo
+        FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id JOIN utilisateur ON service.user_id = utilisateur.user_id
+        
         WHERE service.Categorie_id = $id  LIMIT $limit OFFSET $offset ";
 
         return $this->db->query($sql);
@@ -159,7 +159,11 @@ class Service
 
     function getServiceById($Service_Id)
     {
-        $sql = "SELECT * FROM service WHERE Service_Id = $Service_Id";
+        $sql="SELECT service.*, categorie.nom_categorie AS nom_categorie ,utilisateur.image as logo , utilisateur.nom_agence as nom_agence
+        FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id 
+        JOIN utilisateur ON service.user_id = utilisateur.user_id
+        
+        WHERE Service_Id = $Service_Id";
         return $this->db->query($sql)->fetch();
     }
 

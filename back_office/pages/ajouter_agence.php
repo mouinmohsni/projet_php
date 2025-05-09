@@ -1,11 +1,19 @@
 <?php
 include "../../classes/agence.php";
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../../front/login.php');
+    exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+}
+
 
 $agences = new Agence();
 
 if (isset($_POST['ajouter'])){
     $agences -> addAgence($_POST , $_FILES);
     header("location:agence.php");
+    exit();
 }
 
 ?>

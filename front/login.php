@@ -20,6 +20,7 @@ if(isset($_POST["login"])){
             $_SESSION["user_id"] = $user["user_id"];
             $_SESSION["nom"] = $user["nom"];
             $_SESSION["role"] = $user["role"];
+
             if($user["role"]=="user"){
                 header("Location: index.php");
             }else{

@@ -5,6 +5,7 @@ if (!isset($_SESSION['user_id'])) {
   header('Location: ../../front/login.php');
   exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
 }
+var_dump($_SESSION['user_id']);
 
 ?>
 <!DOCTYPE html>

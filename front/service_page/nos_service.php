@@ -8,13 +8,14 @@ if (isset($_GET["id"])){
     $id_categorie=$_GET["id"];
 }
 
+
 $limit = 6;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 
 $categries = new Categorie();
-$lise_categories = $categries ->getAllCategories();
+$lise_categories = $categries ->getAllCategoriesWithServiceCount();
 
 $this_categrie = $categries ->getCategoriesById($id_categorie);
 
@@ -22,6 +23,7 @@ $this_categrie = $categries ->getCategoriesById($id_categorie);
 
 $services = new Service();
 $liste_services = $services->getAllOneService($id_categorie , $limit , $offset);
+
 
 // Appel à la méthode pour connaître le nombre total de services
 $totalServices = $services->countnOneServices($id_categorie);
@@ -216,7 +218,7 @@ $totalPages = ceil($totalServices / $limit);
 									<i class="<?php echo $categorie["image"] ?>"></i>
 								</div>
                                 <h2><a href="../service_page/nos_service.php?id=<?php echo $categorie['Categorie_id']?>"><?php echo $categorie["nom_categorie"] ?> </a></h2>
-								<p>150 listings</p>
+								<p><?php echo $categorie['service_count']?> Services</p>
 							</div>
 						</li>
 
@@ -265,7 +267,7 @@ $totalPages = ceil($totalServices / $limit);
                                         </div>
                                     </div>
                                     <div class="single-explore-txt bg-theme-2">
-                                        <h2><a href="#"><?php echo $one_services['nom']; ?></a></h2>
+                                        <h2><a href="one_service.php?id=<?php echo $one_services['Service_Id']; ?>"><?php echo $one_services['nom']; ?></a></h2>
                                         <p class="explore-rating-price">
                                             <span class="explore-rating"><?php echo $one_services['rating']; ?></span>
                                             <a href="#"> <?php echo $one_services['ratings_count']; ?> ratings</a>
@@ -279,9 +281,9 @@ $totalPages = ceil($totalServices / $limit);
                                             <div class="row">
                                                 <div class="col-sm-2">
                                                     <div class="explore-person-img">
-                                                        <a href="#">
-                                                            <img src="../assets/images/explore/person.png" alt="explore person">
-                                                        </a>
+
+                                                            <img src="../../back_office/media/agence/<?php echo $one_services["logo"];?>" alt="explore person">
+
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-10">
