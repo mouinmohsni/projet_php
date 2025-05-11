@@ -17,11 +17,20 @@ class Service
 
 
 
+    function getAllServices($limit=null , $offset=null)
+    {
+
+    }
+
     function getAllServicesForUsers($limit , $offset){
 
-        $sql = "SELECT service.*, categorie.nom_categorie AS nom_categorie
-        FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id
-        LIMIT $limit OFFSET $offset";
+
+        $sql = "SELECT service.*, categorie.nom_categorie AS nom_categorie ,utilisateur.image as logo
+        FROM service JOIN  categorie ON service.Categorie_id = categorie.Categorie_id JOIN utilisateur ON service.user_id = utilisateur.user_id";
+
+        if ($limit !== null && $offset !== null) {
+            $sql .= " LIMIT $limit OFFSET $offset";
+        }
         return $this -> db -> query($sql);
     }
 
@@ -96,7 +105,7 @@ class Service
         if (isset($files['url_image']) && $files['url_image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['url_image']['tmp_name'];
             $imageName = basename($files['url_image']['name']);
-            $destination = '../media/service/' . $imageName;
+            $destination = '../../media/service/' . $imageName;
 
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
@@ -136,7 +145,7 @@ class Service
         if (isset($files['url_image']) && $files['url_image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['url_image']['tmp_name'];
             $imageName = basename($files['url_image']['name']);
-            $destination = '../media/service/' . $imageName;
+            $destination = '../../media/service/' . $imageName;
 
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             $ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));

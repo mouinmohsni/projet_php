@@ -145,8 +145,8 @@ if(isset($_POST["login"])){
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 			                    <li class="active"><a href="index.php">home</a></li>
 			                    <li><a href="service.php">Services</a></li>
-			                    <li><a href="./explore.html">explore</a></li>
-			                    <li><a href="./contact.html">contact</a></li>
+			                    <li><a href="explore.php">explore</a></li>
+			                    <li><a href="contact.php">contact</a></li>
 			                </ul><!--/.nav -->
 			            </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
@@ -198,8 +198,8 @@ if(isset($_POST["login"])){
 			           	<div class="col-sm-9">
 			           		<ul class="footer-menu-item">
 			                    <li class="scroll"><a href="service.php">Services</a></li>
-			                    <li class="scroll"><a href="./explore.html">explore</a></li>
-			                    <li class="scroll"><a href="./contact.html">contact</a></li>
+			                    <li class="scroll"><a href="explore.php">explore</a></li>
+			                    <li class="scroll"><a href="contact.php">contact</a></li>
 			                    <li class=" scroll"><a href="login.php">my account</a></li>
 			                </ul><!--/.nav -->
 			           	</div>

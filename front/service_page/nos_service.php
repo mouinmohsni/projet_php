@@ -2,6 +2,13 @@
 
 include "../../classes/Service.php";
 include "../../classes/Categorie.php";
+session_start();
+
+$user_id=null;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
+
 
 $id_categorie = null ;
 if (isset($_GET["id"])){
@@ -103,21 +110,31 @@ $totalPages = ceil($totalServices / $limit);
 						</ul>
 					</div>
 				</li>
-				<li class="head-responsive-right pull-right">
-					<div class="header-top-right">
-						<ul>
-							<li class="header-top-contact">
-								+1 222 777 6565
-							</li>
-							<li class="header-top-contact">
-								<a href="../login.php">sign in</a>
-							</li>
-							<li class="header-top-contact">
-								<a href="../login.php">register</a>
-							</li>
-						</ul>
-					</div>
-				</li>
+                <li class="head-responsive-right pull-right">
+                    <div class="header-top-right">
+                        <?php if(is_null($user_id)) { ?>
+                            <ul>
+                                <li class="header-top-contact">
+                                    <a href="../login.php">sign in</a>
+                                </li>
+                                <li class="header-top-contact">
+                                    <a href="../register.php">register</a>
+                                </li>
+                            </ul>
+
+                        <?php }else{ ?>
+                            <ul>
+                                <li class="header-top-contact">
+                                    <a href="profil.php">mon compte</a>
+                                </li>
+                                <li class="header-top-contact">
+                                    <a href="../../back_office/pages/logout.php">deconnecter</a>
+                                </li>
+                            </ul>
+
+                        <?php }?>
+                    </div>
+                </li>
 			</ul>
 
 		</header><!--/.header-top-->
@@ -142,14 +159,14 @@ $totalPages = ceil($totalServices / $limit);
 			            <!-- End Header Navigation -->
 
 			            <!-- Collect the nav links, forms, and other content for toggling -->
-			            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li class=" scroll active"><a href="../index.php">home</a></li>
-			                    <li class="scroll"><a href="../service.php">Services</a></li>
-			                    <li class="scroll"><a href="../explore.html">explore</a></li>
-			                    <li class="scroll"><a href="../contact.html">contact</a></li>
-			                </ul><!--/.nav -->
-			            </div><!-- /.navbar-collapse -->
+                        <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+                            <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                                <li ><a href="../index.php">home</a></li>
+                                <li class="active"><a href="../service.php">Services</a></li>
+                                <li><a href="../explore.php">explore</a></li>
+                                <li><a href="../contact.php">contact</a></li>
+                            </ul><!--/.nav -->
+                        </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
 			    </nav><!--/nav-->
 			    <!-- End Navigation -->
@@ -342,15 +359,17 @@ $totalPages = ceil($totalServices / $limit);
 		           	<div class="row">
 			           	<div class="col-sm-3">
 			           		 <div class="navbar-header">
-				                <a class="navbar-brand" href="index.html">list<span>race</span></a>
+				                <a class="navbar-brand" href="../index.php">list<span>race</span></a>
 				            </div><!--/.navbar-header-->
 			           	</div>
 			           	<div class="col-sm-9">
                             <ul class="footer-menu-item">
-                                <li class="scroll"><a href="service.html">Services</a></li>
-                                <li class="scroll"><a href="#explore">explore</a></li>
-                                <li class="scroll"><a href="contact.html">contact</a></li>
-                                <li class=" scroll"><a href="#contact">my account</a></li>
+                                <li class="scroll"><a href="../service.php">Services</a></li>
+                                <li class="scroll"><a href="../explore.php">explore</a></li>
+                                <li class="scroll"><a href="../contact.php">contact</a></li>
+                                <?php if($user_id) { ?>
+                                <li class=" scroll"><a href="profil.php">mon compte</a></li>
+                                <?php } ?>
                             </ul><!--/.nav -->
                         </div>
 		           </div>

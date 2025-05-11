@@ -1,11 +1,32 @@
 <?php
 
-
+include "../classes/Service.php";
 include "../classes/Categorie.php";
+session_start();
+$user_id=null;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
+
+
+
+$limit = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
 
 $categries = new Categorie();
 $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 
+
+
+
+$services = new Service();
+$liste_services = $services->getAllServicesForUsers($limit ,$offset);
+
+
+$totalServices = $services->countAllServices();
+$totalPages = ceil($totalServices / $limit);
 
 
 ?>
@@ -85,14 +106,27 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 				</li>
 				<li class="head-responsive-right pull-right">
 					<div class="header-top-right">
-						<ul>
-							<li class="header-top-contact">
-								<a href="login.php">sign in</a>
-							</li>
-							<li class="header-top-contact">
-								<a href="register.php">register</a>
-							</li>
-						</ul>
+                        <?php if(is_null($user_id)) { ?>
+                            <ul>
+                                <li class="header-top-contact">
+                                    <a href="login.php">sign in</a>
+                                </li>
+                                <li class="header-top-contact">
+                                    <a href="register.php">register</a>
+                                </li>
+                            </ul>
+
+                        <?php }else{ ?>
+                            <ul>
+                                <li class="header-top-contact">
+                                    <a href="service_page/profil.php">mon compte</a>
+                                </li>
+                                <li class="header-top-contact">
+                                    <a href="../back_office/pages/logout.php">deconnecter</a>
+                                </li>
+                            </ul>
+
+                        <?php }?>
 					</div>
 				</li>
 			</ul>
@@ -123,8 +157,8 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 			                    <li class="active"><a href="index.php">home</a></li>
 			                    <li><a href="service.php">Services</a></li>
-			                    <li><a href="./explore.html">explore</a></li>
-			                    <li><a href="./contact.html">contact</a></li>
+			                    <li><a href="explore.php">explore</a></li>
+			                    <li><a href="contact.php">contact</a></li>
 			                </ul><!--/.nav -->
 			            </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
@@ -149,7 +183,7 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 					<div class="welcome-hero-form">
 						<div class="single-welcome-hero-form">
 							<h3>what?</h3>
-							<form action="index.html">
+							<form action="index.php">
 								<input type="text" placeholder="Ex: palce, resturent, food, automobile" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -158,7 +192,7 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 						</div>
 						<div class="single-welcome-hero-form">
 							<h3>location</h3>
-							<form action="index.html">
+							<form action="index.php">
 								<input type="text" placeholder="Ex: london, newyork, rome" />
 							</form>
 							<div class="welcome-hero-form-icon">
@@ -203,34 +237,7 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
                             <?php
                         }
                         ?>
-                        <!--						<li>-->
-                        <!--							<div class="single-list-topics-content">-->
-                        <!--								<div class="single-list-topics-icon">-->
-                        <!--									<i class="flaticon-travel"></i>-->
-                        <!---->
-                        <!--								</div>-->
-                        <!--								<h2><a href="destination.php">destination</a></h2>-->
-                        <!--								<p>214 listings</p>-->
-                        <!--							</div>-->
-                        <!--						</li>-->
-                        <!--						<li>-->
-                        <!--							<div class="single-list-topics-content">-->
-                        <!--								<div class="single-list-topics-icon">-->
-                        <!--									<i class="flaticon-building"></i>-->
-                        <!--								</div>-->
-                        <!--								<h2><a href="hotels.php">hotels</a></h2>-->
-                        <!--								<p>185 listings</p>-->
-                        <!--							</div>-->
-                        <!--						</li>-->
-                        <!--						<li>-->
-                        <!--							<div class="single-list-topics-content">-->
-                        <!--								<div class="single-list-topics-icon">-->
-                        <!--									<i class="flaticon-transport"></i>-->
-                        <!--								</div>-->
-                        <!--								<h2><a href="../service_page/automotion.html">automotion</a></h2>-->
-                        <!--								<p>120 listings</p>-->
-                        <!--							</div>-->
-                        <!--						</li>-->
+
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -297,415 +304,106 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 		<!--works end -->
 
 		<!--explore start -->
-		<section id="explore" class="explore">
-			<div class="container">
-				<div class="section-header">
-					<h2>explore</h2>
-					<p>Explore New place, food, culture around the world and many more</p>
-				</div><!--/.section-header-->
-				<div class="explore-content">
-					<div class="row">
-						<div class=" col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e1.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">best rated</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-1">
-									<h2><a href="#">tommy helfinger bar</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">5.0</span>
-										<a href="#"> 10 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">5$-300$</span>
-										</span>
-										 <a href="#">resturent</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn" onclick="window.location.href='#'">close now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e2.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">swim and dine resort</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.5</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">50$-500$</span>
-										</span>
-										 <a href="#">hotel</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e3.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">best rated</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-3">
-									<h2><a href="#">europe tour</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">5.0</span>
-										<a href="#"> 15 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">5k$-10k$</span>
-										</span>
-										 <a href="#">destination</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn" onclick="window.location.href='#'">close now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class=" col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e4.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">most view</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-4">
-									<h2><a href="#">banglow with swiming pool</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">5.0</span>
-										<a href="#"> 10 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">10k$-15k$</span>
-										</span>
-										 <a href="#">real estate</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn" onclick="window.location.href='#'">close now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e5.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">featured</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-2">
-									<h2><a href="#">vintage car expo</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">4.2</span>
-										<a href="#"> 8 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">500$-1200$</span>
-										</span>
-										 <a href="#">automotion</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn open-btn" onclick="window.location.href='#'">open now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-explore-item">
-								<div class="single-explore-img">
-									<img src="assets/images/explore/e6.jpg" alt="explore image">
-									<div class="single-explore-img-info">
-										<button onclick="window.location.href='#'">best rated</button>
-										<div class="single-explore-image-icon-box">
-											<ul>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-arrows-alt"></i>
-													</div>
-												</li>
-												<li>
-													<div class="single-explore-image-icon">
-														<i class="fa fa-bookmark-o"></i>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="single-explore-txt bg-theme-5">
-									<h2><a href="#">thailand tour</a></h2>
-									<p class="explore-rating-price">
-										<span class="explore-rating">5.0</span>
-										<a href="#"> 15 ratings</a> 
-										<span class="explore-price-box">
-											form
-											<span class="explore-price">5k$-10k$</span>
-										</span>
-										 <a href="#">destination</a>
-									</p>
-									<div class="explore-person">
-										<div class="row">
-											<div class="col-sm-2">
-												<div class="explore-person-img">
-													<a href="#">
-														<img src="assets/images/explore/person.png" alt="explore person">
-													</a>
-												</div>
-											</div>
-											<div class="col-sm-10">
-												<p>
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid ut labore et dolore magna aliqua.... 
-												</p>
-											</div>
-										</div>
-									</div>
-									<div class="explore-open-close-part">
-										<div class="row">
-											<div class="col-sm-5">
-												<button class="close-btn" onclick="window.location.href='#'">close now</button>
-											</div>
-											<div class="col-sm-7">
-												<div class="explore-map-icon">
-													<a href="#"><i data-feather="map-pin"></i></a>
-													<a href="#"><i data-feather="upload"></i></a>
-													<a href="#"><i data-feather="heart"></i></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div><!--/.container-->
+        <section id="explore" class="explore">
+            <div class="container">
+                <div class="section-header">
+                    <h2>explore</h2>
+                    <p>Explore New place, food, culture around the world and many more</p>
+                </div><!--/.section-header-->
+                <div class="explore-content">
+                    <div class="row">
+                        <?php
+                        while ($one_services = $liste_services->fetch()){
+                            ?>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="single-explore-item">
+                                    <div class="single-explore-img">
+                                        <img src="../back_office/media/service/<?php echo $one_services['url_image']; ?>" alt="explore image">
+                                        <div class="single-explore-img-info">
+                                            <div class="single-explore-image-icon-box">
+                                                <ul>
+                                                    <li>
+                                                        <div class="single-explore-image-icon">
+                                                            <i class="fa fa-arrows-alt"></i>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="single-explore-image-icon">
+                                                            <i class="fa fa-bookmark-o"></i>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="single-explore-txt bg-theme-2">
+                                        <h2><a href="service_page/one_service.php?id=<?php echo $one_services['Service_Id']; ?>"><?php echo $one_services['nom']; ?></a></h2>
+                                        <p class="explore-rating-price">
+                                            <span class="explore-rating"><?php echo $one_services['rating']; ?></span>
+                                            <a href="#"> <?php echo $one_services['ratings_count']; ?> ratings</a>
+                                            <span class="explore-price-box">
+                                                form
+                                                <span class="explore-price"><?php echo $one_services["prix"];?>$</span>
+                                            </span>
+                                            <a href="#"><?php echo $one_services["nom_categorie"];?></a>
+                                        </p>
+                                        <div class="explore-person">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <div class="explore-person-img">
 
-		</section><!--/.explore-->
+                                                        <img src="../back_office/media/agence/<?php echo $one_services["logo"];?>" alt="explore person">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <p>
+                                                        <?php echo $one_services["description"];?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                        ?>
+
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <!-- Bouton "Précédent" -->
+                        <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="=page=<?= $page - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <!-- Liens numérotés -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Bouton "Suivant" -->
+                        <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+
+            </div><!--/.container-->
+
+        </section><!--/.explore-->
 		<!--explore end -->
 
 		
@@ -752,64 +450,6 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 		</section><!--/.counter-->	
 		<!-- statistics end -->
 
-<!-- 		
-		<section id="blog" class="blog" >
-			<div class="container">
-				<div class="section-header">
-					<h2>news and articles</h2>
-					<p>Always upto date with our latest News and Articles </p>
-				</div>
-				<div class="blog-content">
-					<div class="row">
-						<div class="col-md-4 col-sm-6">
-							<div class="single-blog-item">
-								<div class="single-blog-item-img">
-									<img src="assets/images/blog/b1.jpg" alt="blog image">
-								</div>
-								<div class="single-blog-item-txt">
-									<h2><a href="#">How to find your Desired Place more quickly</a></h2>
-									<h4>posted <span>by</span> <a href="#">admin</a> march 2018</h4>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur de adipisicing elit, sed do eiusmod tempore incididunt ut labore et dolore magna.
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-blog-item">
-								<div class="single-blog-item-img">
-									<img src="assets/images/blog/b2.jpg" alt="blog image">
-								</div>
-								<div class="single-blog-item-txt">
-									<h2><a href="#">How to find your Desired Place more quickly</a></h2>
-									<h4>posted <span>by</span> <a href="#">admin</a> march 2018</h4>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur de adipisicing elit, sed do eiusmod tempore incididunt ut labore et dolore magna.
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="single-blog-item">
-								<div class="single-blog-item-img">
-									<img src="assets/images/blog/b3.jpg" alt="blog image">
-								</div>
-								<div class="single-blog-item-txt">
-									<h2><a href="#">How to find your Desired Place more quickly</a></h2>
-									<h4>posted <span>by</span> <a href="#">admin</a> march 2018</h4>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur de adipisicing elit, sed do eiusmod tempore incididunt ut labore et dolore magna.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</section>
-	 -->
-
 		<!--subscription strat -->
 		<section id="contact"  class="subscription">
 			<div class="container">
@@ -845,31 +485,25 @@ $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 		           	<div class="row">
 			           	<div class="col-sm-3">
 			           		 <div class="navbar-header">
-				                <a class="navbar-brand" href="index.html">list<span>race</span></a>
+				                <a class="navbar-brand" href="index.php">list<span>race</span></a>
 				            </div><!--/.navbar-header-->
 			           	</div>
-			           	<div class="col-sm-9">
-			           		<ul class="footer-menu-item">
-			                    <li class="scroll"><a href="service.php">Services</a></li>
-			                    <li class="scroll"><a href="./explore.html">explore</a></li>
-			                    <li class="scroll"><a href="./contact.html">contact</a></li>
-			                    <li class=" scroll"><a href="login.php">my account</a></li>
-			                </ul><!--/.nav -->
-			           	</div>
+                        <div class="col-sm-9">
+                            <ul class="footer-menu-item">
+                                <li class="scroll"><a href="service.php">Services</a></li>
+                                <li class="scroll"><a href="explore.php">explore</a></li>
+                                <li class="scroll"><a href="contact.php">contact</a></li>
+                                <?php if($user_id) { ?>
+                                    <li class=" scroll"><a href="service_page/profil.php">mon compte</a></li>
+                                <?php } ?>
+                            </ul><!--/.nav -->
+                        </div>
 		           </div>
 				</div>
 				<div class="hm-footer-copyright">
 					<div class="row">
-						
-						<div class="col-sm-7">
-							<div class="footer-social">
-								<span><i class="fa fa-phone"> +1  (222) 777 8888</i></span>
-								<a href="#"><i class="fa fa-facebook"></i></a>	
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-google-plus"></i></a>
-							</div>
-						</div>
+
+
 					</div>
 					
 				</div><!--/.hm-footer-copyright-->

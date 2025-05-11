@@ -68,4 +68,35 @@ class User
 
    }
 
+    function updateUser($data)
+    {
+        $user_id=$data['user_id'];
+        $nom = $data['nom'];
+        $prenom = $data['prenom'];
+        $email = $data['e_mail'];
+            var_dump($data);
+        if($data['password']==""){
+            $password = "";
+        }else{
+            $password = md5($data['password']);
+        }
+        $adresse = $data['adresse'];
+        $ville = $data['ville'];
+        $pays = $data['pays'];
+        $tel = $data['tel'];
+        $updated_at=date("Y-m-d H:i:s");
+
+        if ($password==""){
+            $this->db->exec( " UPDATE utilisateur SET  nom ='$nom', prenom = '$prenom', adresse = '$adresse',e_mail='$email',
+                            ville='$ville',pays='$pays',tel='$tel',updated_at = '$updated_at' WHERE utilisateur.user_id = $user_id");
+
+        }else{
+
+            $this->db->exec( " UPDATE utilisateur SET  nom ='$nom', prenom = '$prenom', adresse = '$adresse',e_mail='$email',
+                            password='$password',ville='$ville',pays='$pays',tel='$tel',updated_at = '$updated_at' WHERE utilisateur.user_id = $user_id");
+        }
+
+
+    }
+
 }

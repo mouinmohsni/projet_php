@@ -1,32 +1,35 @@
 <?php
-include  "../../classes/Agence.php";
+    include "../../../classes/Categorie.php";
+    include "../../../classes/Service.php";
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../front/login.php');
-    exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
-}
+session_start();
 
-
-$agences = new Agence();
-$liste_agences = $agences -> getAllAgences();
-
-if (isset($_GET['id'])) {
-    $ic = $_GET['id'];
-    $agence = $agences -> getAgenceById($ic);
-
-}
-if (isset($_POST['update'])) {
-    if($_POST['image'] = null){
-        $_POST['image'] = $agence['image'];
-
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: ../../../front/login.php');
+        exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+    }else{
+        $user_id = $_SESSION['user_id'];
     }
 
-        $agences -> updateAgence($_POST , $_FILES);
-    header("location:agence.php");
-    exit();
-}
-?>
+    $Categories = new Categorie();
+    $allCategories = $Categories->getAllCategories();
 
+    $Services = new Service();
+
+    if (isset($_GET["id"])){
+        $Service_Id = $_GET["id"];
+        $oneService = $Services->getServiceById($Service_Id);
+    }
+
+
+if(isset($_POST['update'])){
+        $Services -> updateService($_POST , $_FILES);
+        header('location:service.php');
+        exit();
+    }
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -35,8 +38,8 @@ if (isset($_POST['update'])) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
     Soft UI Dashboard 3 by Creative Tim
   </title>
@@ -48,7 +51,7 @@ if (isset($_POST['update'])) {
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <link id="pagestyle" href="../../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -58,8 +61,8 @@ if (isset($_POST['update'])) {
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" dashboard.php " target="_blank">
-            <img src="../media/logo.png" class="navbar-brand-img h-100" alt="main_logo">
+        <a class="navbar-brand m-0" href="../dashboard.php " target="_blank">
+            <img src="../../media/logo.png" class="navbar-brand-img h-100" alt="main_logo">
             <!--        <span class="ms-1 font-weight-bold">listrace</span>-->
         </a>
     </div>
@@ -67,7 +70,7 @@ if (isset($_POST['update'])) {
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link  active" href="dashboard.php">
+                <a class="nav-link  active" href="../dashboard.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>shop </title>
@@ -89,7 +92,7 @@ if (isset($_POST['update'])) {
 
 
             <li class="nav-item">
-                <a class="nav-link  " href="../../front/login.php">
+                <a class="nav-link  " href="../../../front/login.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 
                         <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -113,29 +116,10 @@ if (isset($_POST['update'])) {
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link  " href="client.php">
-                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>office</title>
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                                    <g transform="translate(1716.000000, 291.000000)">
-                                        <g id="office" transform="translate(153.000000, 2.000000)">
-                                            <path class="color-background opacity-6" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
-                                            <path class="color-background" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
-                    <span class="nav-link-text ms-1">Clients</span>
-                </a>
-            </li>
+
 
             <li class="nav-item">
-                <a class="nav-link  " href="../pages/profile.html">
+                <a class="nav-link  " href="../profile.html">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>customer-support</title>
@@ -166,7 +150,7 @@ if (isset($_POST['update'])) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link  " href="agence.php">
+                <a class="nav-link  " href="../agences/agence.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>credit-card</title>
@@ -254,7 +238,7 @@ if (isset($_POST['update'])) {
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <h6 class="font-weight-bolder mb-0">modifier Agence</h6>
+          <h6 class="font-weight-bolder mb-0">service</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -272,7 +256,8 @@ if (isset($_POST['update'])) {
                 <ul class="dropdown-menu dropdown-menu-end ">
                   <li><button class="dropdown-item" type="button">Profile</button></li>
                   <li><button class="dropdown-item" type="button">Contacter support </button></li>
-                  <li><button class="dropdown-item" type="button">déconnexion</button></li>
+                  <li><button class="dropdown-item" onclick="window.location.href='../logout.php'"  type="button">déconnexion</button></li>
+
                 </ul>
               </a>
             </li>
@@ -289,7 +274,7 @@ if (isset($_POST['update'])) {
             <div class="d-flex align-items-center">
               <div>
                 <h5 class="mb-1 text-white font-weight-bolder">
-                  Modification d'agence
+                    <?php echo $oneService['nom'] ; ?>
                 </h5>
               </div>
             </div>
@@ -299,111 +284,100 @@ if (isset($_POST['update'])) {
     </div>
 
 
-    <div class="container-fluid py-4">
-      <div class="row d-flex">
-        <form action="update_agence.php" method="post" enctype="multipart/form-data"  class="row d-flex">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header pb-0">
-                <div class="d-flex align-items-center">
-                  <p class="mb-0">Modifer l'Agence : <?php echo $agence['nom_agence']; ?> </p>
-                  <button type="submit" class="btn btn-primary btn-sm ms-auto" name="update">Modifier</button>
-                </div>
-              </div>
-              <div class="card-body">
-                <p class="text-uppercase text-sm">les infortmain de l'agence </p>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <input class="form-control" type="hidden" value="<?php echo $agence['user_id']; ?>" name="user_id" id="user_id">
-                      <label for="nom_agence" class="form-control-label">nom de l'agence </label>
-                      <input class="form-control" type="text" value="<?php echo $agence['nom_agence']; ?>" name="nom_agence" id="nom_agence">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="e_mail" class="form-control-label">Email address</label>
-                      <input class="form-control" type="email" value="<?php echo $agence['e_mail']; ?>"  name="e_mail" id="e_mail">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="nom" class="form-control-label">Nom responsable </label>
-                      <input class="form-control" type="text"  name="nom" id="nom" value="<?php echo $agence['nom']; ?>">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="prenom" class="form-control-label">Prenom responsable</label>
-                      <input class="form-control" type="text" name="prenom" id="prenom" value="<?php echo $agence['prenom']; ?>">
-                    </div>
-                  </div>
-                </div>
-                <hr class="horizontal dark">
-                <p class="text-uppercase text-sm">Contact Information</p>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="adresse" class="form-control-label">Address</label>
-                      <input class="form-control" id="adresse" name="adresse" type="text" value="<?php echo $agence['adresse']; ?>">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="ville" class="form-control-label">ville</label>
-                      <input class="form-control" type="text" value="<?php echo $agence['ville']; ?>"  name="ville" id="ville" >
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="pays" class="form-control-label">pays</label>
-                      <input class="form-control" type="text" value="<?php echo $agence['pays']; ?>" id="pays" name="pays">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="tel" class="form-control-label">Numer de tel. :</label>
-                      <input class="form-control" type="text" name="tel" id="tel" value="<?php echo $agence['tel']; ?>">
-                    </div>
-                  </div>
-                </div>
-                <hr class="horizontal dark">
+      <div class="container-fluid py-4">
+          <div class="row d-flex">
+              <form action="update_service.php" enctype="multipart/form-data" method="post" class="row d-flex">
+                  <div class="col-md-8">
+                      <div class="card">
 
-              </div>
-            </div>
+                          <div class="card-body">
+                              <p class="text-uppercase text-sm">les Informations du Service   </p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">Nom du Service  </label>
+                                          <input class="form-control border-0 shadow-none " disabled type="text" name="nom" id="nom" value="<?php echo $oneService['nom'] ; ?>">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="Categorie_id" class="form-control-label">Categorie</label>
+
+
+                                          <select class="form-select border-0 shadow-none disabled" disabled aria-label=" disabled Default select example" name="Categorie_id" id="Categorie_id">
+                                              <option disabled>Choisir une Categorie</option>
+                                              <?php while($categorie = $allCategories->fetch()): ?>
+                                                  <option value="<?= $categorie["Categorie_id"] ?>"
+                                                      <?= $oneService['Categorie_id'] == $categorie["Categorie_id"] ? 'selected' : '' ?>>
+                                                      <?= $categorie["nom_categorie"] ?>
+                                                  </option>
+                                              <?php endwhile; ?>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label for="nom" class="form-control-label">prix </label>
+                                          <input class="form-control border-0 shadow-none disabled" type="text"  name="prix" id="prix" disabled value="<?php echo $oneService['prix'] ; ?>" >
+                                      </div>
+                                  </div>
+
+                              </div>
+                              <hr class="horizontal dark">
+                              <p class="text-uppercase text-sm">Contact Information</p>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="adresse" class="form-control-label">Address</label>
+                                          <input class="form-control border-0 shadow-none disabled" id="adresse" name="adresse" disabled type="text" value="<?php echo $oneService['adresse'] ; ?>">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label for="description" class="form-control-label">Description</label>
+                                          <textarea class="form-control border-0 shadow-none disabled" type="text" disabled  name="description" id="description"><?php echo $oneService['description'] ; ?></textarea>
+                                      </div>
+                                  </div>
+
+                                  </div>
+                              </div>
+                              <hr class="horizontal dark">
+
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="card-body pt-0">
+                              <div class="row">
+
+                              </div>
+                              <div class="text-center mt-4">
+                                  <label id="uploadBox" class="upload-box">
+
+                                      <img
+                                              id="preview"
+                                              src="<?php echo !empty($oneService['url_image']) ? '../../media/service/' . $oneService['url_image'] : '../media/file-uploads.jpg'; ?>"
+                                              alt="file-uploads">
+
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+              </form>
+
+
           </div>
-          <div class="col-md-4">
-            <div class="card-body pt-0">
-              <div class="row">
 
-              </div>
-              <div class="text-center mt-4">
-                <label id="uploadBox" class="upload-box">
-                  <input type="file" id="imageInput" accept="image/*" name="image" hidden value="<?php echo $agence['image']; ?>" >
-                    <img
-                            id="preview"
-                            src="<?php echo !empty($agence['image']) ? '../media/agence/' . $agence['image'] : '../media/file-uploads.jpg'; ?>"
-                            alt="file-uploads">
-
-                </label>
-                  <p>modifier l'image de l'agence ici</p>
-              </div>
-            </div>
-          </div>
-        </form>
       </div>
-
-    </div>
 
 
 
   </div>
 
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -416,9 +390,8 @@ if (isset($_POST['update'])) {
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
-  <script src="../assets/js/script.js"></script>
-
+  <script src="../../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+  <script src="../../assets/js/script.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+$user_id=null;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
+?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -88,17 +96,27 @@
 				</li>
 				<li class="head-responsive-right pull-right">
 					<div class="header-top-right">
+						<?php if(is_null($user_id)) { ?>
 						<ul>
 							<li class="header-top-contact">
-								+1 222 777 6565
+								<a href="login.php">sign in</a>
 							</li>
 							<li class="header-top-contact">
-								<a href="#">sign in</a>
-							</li>
-							<li class="header-top-contact">
-								<a href="#">register</a>
+								<a href="register.php">register</a>
 							</li>
 						</ul>
+
+						<?php }else{ ?>
+						<ul>
+							<li class="header-top-contact">
+								<a href="service_page/profil.php">mon compte</a>
+							</li>
+							<li class="header-top-contact">
+								<a href="../back_office/pages/logout.php">deconnecter</a>
+							</li>
+						</ul>
+
+						<?php }?>
 					</div>
 				</li>
 			</ul>
@@ -125,14 +143,14 @@
 			            <!-- End Header Navigation -->
 
 			            <!-- Collect the nav links, forms, and other content for toggling -->
-			            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
-			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li><a href="index.php">home</a></li>
-			                    <li ><a href="service.php">Services</a></li>
-			                    <li><a href="#explore">explore</a></li>
-			                    <li class=" active"><a href="contact.html">contact</a></li>
-			                </ul><!--/.nav -->
-			            </div><!-- /.navbar-collapse -->
+                        div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+                        <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                            <li><a href="index.php">home</a></li>
+                            <li><a href="service.php">Services</a></li>
+                            <li><a href="explore.php">explore</a></li>
+                            <li class="active"><a href="contact.php">contact</a></li>
+                        </ul><!--/.nav -->
+                    </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
 			    </nav><!--/nav-->
 			    <!-- End Navigation -->
@@ -210,35 +228,19 @@
 				                <a class="navbar-brand" href="index.php">list<span>race</span></a>
 				            </div><!--/.navbar-header-->
 			           	</div>
-			           	<div class="collapse navbar-collapse menu-ui-design" >
-			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-			                    <li class="active"><a href="index.php">home</a></li>
-			                    <li><a href="service.php">Services</a></li>
-			                    <li><a href="./explore.html">explore</a></li>
-			                    <li><a href="./contact.html">contact</a></li>
-			                </ul><!--/.nav -->
-			            </div><!-- /.navbar-collapse -->
+                        <div class="col-sm-9">
+                            <ul class="footer-menu-item">
+                                <li class="scroll"><a href="service.php">Services</a></li>
+                                <li class="scroll"><a href="explore.php">explore</a></li>
+                                <li class="scroll"><a href="contact.php">contact</a></li>
+                                <?php if($user_id) { ?>
+                                    <li class=" scroll"><a href="service_page/profil.php">mon compte</a></li>
+                                <?php } ?>
+                            </ul><!--/.nav -->
+                        </div>
 		           </div>
 				</div>
-				<div class="hm-footer-copyright">
-					<div class="row">
-						<div class="col-sm-5">
-							<p>
-								&copy;copyright. designed and developed by <a href="https://www.themesine.com/">themesine</a>
-							</p><!--/p-->
-						</div>
-						<div class="col-sm-7">
-							<div class="footer-social">
-								<span><i class="fa fa-phone"> +1  (222) 777 8888</i></span>
-								<a href="#"><i class="fa fa-facebook"></i></a>	
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-								<a href="#"><i class="fa fa-google-plus"></i></a>
-							</div>
-						</div>
-					</div>
-					
-				</div><!--/.hm-footer-copyright-->
+
 			</div><!--/.container-->
 
 			<div id="scroll-Top">

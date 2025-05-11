@@ -1,57 +1,74 @@
 <?php
-include "../../classes/Categorie.php";
+include "../../../classes/Service.php";
+session_start();
+
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../../front/login.php');
+    header('Location: ../../../front/login.php');
     exit(); // ← toujours ajouter ça après un header pour stopper l'exécution
+}else{
+    $user_id = $_SESSION['user_id'];
+    $user_role = $_SESSION['role'];
 }
 
-$categories = new Categorie();
+$Service = new Service();
 
-if (isset($_GET["id"])){
-    $id = $_GET["id"];
-    $one_categorie = $categories -> getCategoriesById($id);
-}
 
-if (isset($_POST["update"])){
-    $categories -> updateCategorie($_POST);
-    header("Location:liste_categries.php");
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+
+$all_user_services= $Service ->getAllServicesForAdmin($user_role,$user_id,$limit,$offset);
+
+$all_service=$Service->getAllServicesForUsers(4,0);
+
+
+
+$serviceCount = $Service->countAllServices();
+
+// Appel à la méthode pour connaître le nombre total de services
+
+$totalPages = ceil($serviceCount / $limit);
+
+
+if (isset($_GET['id'])) {
+    $id_service = $_GET['id'];
+    $Service->deleteService($id_service);
+    header('Location: service.php');
     exit();
 }
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <title>
-        Soft UI Dashboard 3 by Creative Tim
-    </title>
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
-    <!-- Nucleo Icons -->
-    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
-    <!-- Nepcha Analytics (nepcha.com) -->
-    <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-    <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+  <title>
+    Soft UI Dashboard 3 by Creative Tim
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <!-- Nepcha Analytics (nepcha.com) -->
+  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
 
-<body class="g-sidenav-show bg-gray-100">
+<body class="g-sidenav-show  bg-gray-100">
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" dashboard.php " target="_blank">
-            <img src="../media/logo.png" class="navbar-brand-img h-100" alt="main_logo">
+        <a class="navbar-brand m-0" href="../dashboard.php " target="_blank">
+            <img src="../../media/logo.png" class="navbar-brand-img h-100" alt="main_logo">
             <!--        <span class="ms-1 font-weight-bold">listrace</span>-->
         </a>
     </div>
@@ -59,7 +76,7 @@ if (isset($_POST["update"])){
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link  active" href="dashboard.php">
+                <a class="nav-link  " href="../dashboard.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>shop </title>
@@ -81,7 +98,7 @@ if (isset($_POST["update"])){
 
 
             <li class="nav-item">
-                <a class="nav-link  " href="../../front/login.php">
+                <a class="nav-link  " href="../reservation/reservation.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 
                         <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -105,29 +122,10 @@ if (isset($_POST["update"])){
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link  " href="client.php">
-                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>office</title>
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                                    <g transform="translate(1716.000000, 291.000000)">
-                                        <g id="office" transform="translate(153.000000, 2.000000)">
-                                            <path class="color-background opacity-6" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
-                                            <path class="color-background" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
-                    <span class="nav-link-text ms-1">Clients</span>
-                </a>
-            </li>
+
 
             <li class="nav-item">
-                <a class="nav-link  " href="../pages/profile.html">
+                <a class="nav-link  " href="../categories/liste_categries.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>customer-support</title>
@@ -158,7 +156,7 @@ if (isset($_POST["update"])){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link  " href="agence.php">
+                <a class="nav-link active " href="../agences/agence.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>credit-card</title>
@@ -179,7 +177,7 @@ if (isset($_POST["update"])){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link  " href="ajouter_agence.ph">
+                <a class="nav-link  " href="../agences/ajouter_agence.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
@@ -195,7 +193,7 @@ if (isset($_POST["update"])){
             </li>
 
             <li class="nav-item">
-                <a class="nav-link  " href="service.php">
+                <a class="nav-link  " href="../services/service.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>document</title>
@@ -216,7 +214,7 @@ if (isset($_POST["update"])){
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  " href="ajouter_service.php">
+                <a class="nav-link  " href="../services/ajouter_service.php">
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>document</title>
@@ -241,137 +239,232 @@ if (isset($_POST["update"])){
     </div>
 
 </aside>
-<div class="main-content position-relative max-height-vh-100 h-100">
+
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-        <div class="container-fluid py-1 px-3">
-            <nav aria-label="breadcrumb">
-                <h6 class="font-weight-bolder mb-0">Modifier Categorie</h6>
-            </nav>
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                    <div class="input-group ">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <h6 class="font-weight-bolder mb-0">sevices</h6>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group ">
 
-                    </div>
-                </div>
-                <ul class="navbar-nav  justify-content-end">
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online</a>
-                    </li>
-                    <li class="nav-item px-3 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0 dropdown nav-item ">
-                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer dropdown-toggle "  data-bs-toggle="dropdown"></i>
-                            <ul class="dropdown-menu dropdown-menu-end ">
-                                <li><button class="dropdown-item" type="button">Profile</button></li>
-                                <li><button class="dropdown-item" type="button">Contacter support </button></li>
-                                <li><button class="dropdown-item" type="button">déconnexion</button></li>
-                            </ul>
-                        </a>
-                    </li>
-                </ul>
             </div>
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online</a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0 dropdown nav-item ">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer dropdown-toggle "  data-bs-toggle="dropdown"></i>
+                <ul class="dropdown-menu dropdown-menu-end ">
+                  <li><button class="dropdown-item" type="button">Profile</button></li>
+                  <li><button class="dropdown-item" type="button">Contacter support </button></li>
+                  <li><button class="dropdown-item" onclick="window.location.href='../logout.php'"  type="button">déconnexion</button></li>
+
+                </ul>
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid">
-        <div class="page-header min-height-250 border-radius-lg mt-4 d-flex flex-column justify-content-end">
-            <span class="mask bg-primary opacity-9"></span>
-            <div class="w-100 position-relative p-3">
-                <div class="d-flex justify-content-between align-items-end">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <h5 class="mb-1 text-white font-weight-bolder">
-                                Mdifier une categrie
-                            </h5>
+    <div class="container-fluid py-4">
+        <div class="row">
+
+            <div class="col-12 mt-4">
+                <div class="card mb-4">
+                    <div class="card-header pb-0 p-3">
+                        <h6 class="mb-1"></h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <?php while ($one_service=$all_service->fetch()) { ?>
+                            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                                <div class="card card-blog card-plain">
+                                    <div class="position-relative">
+                                        <a class="d-block">
+                                            <img src="../../media/service/<?php echo $one_service["url_image"] ?>" alt="img-blur-shadow" class="img-fluid shadow border-radius-md">
+                                        </a>
+                                    </div>
+                                    <div class="card-body px-1 pb-0">
+                                        <p class="text-secondary mb-0 text-sm"></p>
+                                        <a href="one_service.php?id= <?php echo $one_service["Service_Id"] ?>">
+                                            <h5 class="font-weight-bolder">
+                                                <?php echo $one_service["nom"] ?>
+                                            </h5>
+                                        </a>
+                                        <p class="mb-4 text-sm">
+                                            <?php echo $one_service["description"] ?>                                        </p>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <a  href="one_service.php?id= <?php echo $one_service["Service_Id"] ?>" type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php }?>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
 
     <div class="container-fluid py-4">
-        <form action="update_categoris.php" method="post"  class="row d-flex">
-        <div class="row d-flex">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4 disabled">
+              <div class="card-header pb-0 d-flex align-content-between justify-content-between">
+              <h6>Liste des service </h6>
 
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <div class="d-flex align-items-center">
-                                <p class="mb-0">Modifer  <?php echo $one_categorie["nom_categorie"]?></p>
-                                <button type="submit" name="update" class="btn btn-primary btn-sm ms-auto">Moifier</button>
-                            </div>
+                  <a class="btn btn-primary mb-0" href="ajouter_service.php"
+                     style="<?= $user_role == 'admin' ? 'display:none;' : '' ?>">
+                      <i class="fas fa-plus"></i>&nbsp;&nbsp;créer nouveau service
+                  </a>
+
+
+
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0 text-nowrap">
+                  <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom du service</th>
+                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Categorie</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nom d'Agance </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">prix</th>
+
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date de cration </th>
+
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">date de modification </th>
+
+
+                        <th class="text-secondary opacity-7"></th>
+                        <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                  while ($oneService = $all_user_services->fetch()){
+
+
+                  ?>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="../../media/service/<?php echo $oneService["url_image"] ?>" class="avatar avatar-sm me-3" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><?php echo $oneService["nom"] ?></h6>
+
+                          </div>
                         </div>
-                        <div class="card-body">
-                            <p class="text-uppercase text-sm">les information du categorie  </p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="nom_categorie" class="form-control-label">Nom du Categorie  </label>
-                                        <input class="form-control" type="text" value="<?php echo $one_categorie["nom_categorie"]?>" name="nom_categorie" id="nom_categorie">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="image" class="form-control-label">Code Flaticon </label>
-                                        <input class="form-control" type="text" value="<?php echo $one_categorie["image"]?>"  name="image" id="image">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
+                      </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo $oneService["nom_categorie"] ?></p>
+                        </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"><?php echo $oneService["nom_agence"] ?></p>
+                      </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo $oneService["description"] ?></p>
+                        </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0"><?php echo $oneService["prix"] ?></p>
+                        </td>
+                        <td class="text-center align-middle">
+                            <p class="text-xs font-weight-bold mb-0">
+                                <?php echo $oneService["cerated_at"] ? $oneService["cerated_at"] : "---------"; ?>
+                            </p>
+                        </td>
+                        <td class="text-center align-middle">
+                            <p class="text-xs font-weight-bold mb-0">
+                                <?php echo $oneService["updated_at"] ? $oneService["updated_at"] : "---------"; ?>
+                            </p>
+                        </td>
+                        <td class="align-middle">
+                            <a href="update_service.php?id=<?php echo $oneService['Service_Id'];?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                Mdifier
+                            </a>
+                        </td>
+                        <td class="align-middle">
+                            <a href="?id=<?php echo $oneService["Service_Id"]?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                supprimer
+                            </a>
+                        </td>
 
-                                        <input class="form-control" type="hidden"  name="Categorie_id" id="Categorie_id" value="<?php echo $one_categorie["Categorie_id"]?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="horizontal dark">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="description" class="form-control-label">Description</label>
-                                        <input class="form-control" id="description" name="description" type="text" value="<?php echo $one_categorie["description"]?>">
-                                    </div>
-                                </div>
 
-                                </div>
 
-                            </div>
-                            <hr class="horizontal dark">
+                    </tr>
+                  <?php } ?>
+                  </tbody>
+                </table>
 
-                        </div>
-                    </div>
-                </div>
+              </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <!-- Bouton "Précédent" -->
+                        <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
 
-            </form>
+                        <!-- Liens numérotés -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- Bouton "Suivant" -->
+                        <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+          </div>
         </div>
+      </div>
+
 
     </div>
+  </main>
 
-
-
-</div>
-
-<!--   Core JS Files   -->
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap.min.js"></script>
-<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-<script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-<script>
+  <!--   Core JS Files   -->
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
-        let options = {
-            damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-</script>
-<!-- Github buttons -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
-<script src="../assets/js/script.js"></script>
-
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
 </body>
 
 </html>

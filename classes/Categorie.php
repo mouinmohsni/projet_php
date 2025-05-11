@@ -36,6 +36,7 @@ class Categorie
 
 
     function getCategoriesById($id){
+        var_dump($id);
         $sql = "SELECT * FROM categorie WHERE Categorie_id = $id";
         return $this -> db -> query($sql)->fetch();
     }

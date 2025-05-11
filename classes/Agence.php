@@ -20,6 +20,19 @@ class Agence
         return $query;
     }
 
+    function agenceMaxService()
+    {
+        $sql="SELECT u.nom_agence , u.user_id, COUNT(s.Service_Id)  AS nb_services
+            FROM utilisateur u
+            JOIN service s ON s.user_id = u.user_id
+            WHERE u.role = 'agence'
+            GROUP BY u.user_id, u.nom_agence
+            ORDER BY nb_services DESC
+            LIMIT 5;";
+        return $this->db->query($sql);
+
+    }
+
     function getAgenceById($id){
         $query = $this->db->query("SELECT * FROM utilisateur WHERE user_id = '$id'");
         return $query->fetch();
@@ -45,7 +58,7 @@ class Agence
         if (isset($files['image']) && $files['image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['image']['tmp_name'];
             $imageName = basename($files['image']['name']);
-            $destination = '../media/agence/' . $imageName;
+            $destination = '../../media/agence/' . $imageName;
 
             // Vérifier l'extension du fichier pour éviter les fichiers non-images
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -95,7 +108,7 @@ class Agence
         if (isset($files['image']) && $files['image']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $files['image']['tmp_name'];
             $imageName = basename($files['image']['name']);
-            $destination = '../media/agence/' . $imageName;
+            $destination = '../../media/agence/' . $imageName;
 
             // Vérifier l'extension du fichier pour éviter les fichiers non-images
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];

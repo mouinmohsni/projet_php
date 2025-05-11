@@ -7,6 +7,7 @@ include "../../classes/Reservation.php";
 include "../../classes/user.php";
 
 
+
 if (!isset($_SESSION['user_id'])) {
     $user_id=null ;
 }else{
@@ -19,19 +20,25 @@ if (!isset($_SESSION['user_id'])) {
 $categries = new Categorie();
 $lise_categories = $categries ->getAllCategoriesWithServiceCount();
 
-if (isset($_GET["id"])){
-    $Service_Id=$_GET["id"];
+if (isset($_GET["Reservation_Id"])){
+    $Reservation_Id=$_GET["Reservation_Id"];
+}
+if(isset($_GET["Service_Id"])){
+    $Service_Id=$_GET["Service_Id"];
 }
 $Services = new Service();
 $infoService = $Services -> getServiceById($Service_Id);
 
 $Reservation = new Reservation();
+$thisReservation = $Reservation -> getReservationById($Reservation_Id);
+var_dump($thisReservation);
 
-if(isset($_POST['add_reservation'])){
+
+if(isset($_POST['update_reservation'])){
 
     file_put_contents('debug.log', print_r($_POST, true));
-    $Reservation->addReservation($_POST);
-    header("Location:../index.php");
+    $Reservation->updateReservation($_POST);
+    header("Location:profil.php");
     exit();
 }
 
@@ -116,31 +123,31 @@ if (isset($_POST["add_rating"])){}
 						</ul>
 					</div>
 				</li>
-				<li class="head-responsive-right pull-right">
-					<div class="header-top-right">
+                <li class="head-responsive-right pull-right">
+                    <div class="header-top-right">
                         <?php if(is_null($user_id)) { ?>
                             <ul>
                                 <li class="header-top-contact">
-                                    <a href="../login.php">sign in</a>
+                                    <a href="login.php">sign in</a>
                                 </li>
                                 <li class="header-top-contact">
-                                    <a href="../register.php">register</a>
+                                    <a href="register.php">register</a>
                                 </li>
                             </ul>
 
                         <?php }else{ ?>
                             <ul>
                                 <li class="header-top-contact">
-                                    <a href="profil.php">mon compte</a>
+                                    <a href="service_page/profil.php">mon compte</a>
                                 </li>
                                 <li class="header-top-contact">
-                                    <a href="../../back_office/pages/logout.php">deconnecter</a>
+                                    <a href="../back_office/pages/logout.php">deconnecter</a>
                                 </li>
                             </ul>
 
                         <?php }?>
-					</div>
-				</li>
+                    </div>
+                </li>
 			</ul>
 					
 		</header><!--/.header-top-->
@@ -294,13 +301,16 @@ if (isset($_POST["add_rating"])){}
                 <div class="tab-content">
                     <div  class="tab-pane active fade in" id="tours">
                         <div class="tab-para">
-                            <form action="one_service.php?id=<?php echo $Service_Id; ?>" method="POST">
+                            <form action="update_one_service.php?Service_Id=<?php echo $Service_Id; ?>&Reservation_Id=<?php echo $thisReservation['Reservation_Id']; ?>" method="POST">
                                 <div class="row">
 
                                     <div class="col-lg-2 col-md-3 col-sm-4">
                                         <div class="single-tab-select-box">
 
                                             <div >
+                                                <input type="hidden" name="etat"  data-toggle="datepicker" id="user_id"  value="<?php echo $thisReservation['etat']; ?>">
+
+                                                <input type="hidden" name="Reservation_Id"  data-toggle="datepicker" id="user_id"  value="<?php echo $thisReservation['Reservation_Id']; ?>">
                                                 <input type="hidden" name="Service_Id" value="<?php echo $Service_Id; ?>">
                                                 <input type="hidden" name="destination_depart"  data-toggle="datepicker" id="destination_depart" value="<?php echo $infoService['adresse']; ?>">
                                                 <input type="hidden" name="destination_arriver"  data-toggle="datepicker" id="destination_arriver" value="<?php echo $thisUser['ville'];?>">
@@ -314,7 +324,7 @@ if (isset($_POST["add_rating"])){}
                                         <div class="single-tab-select-box">
                                             <h2>check in</h2>
                                             <div class="travel-check-icon">
-                                                <input type="date" name="date_debut" class="form-control" data-toggle="datepicker" placeholder="12 -01 - 2017 ">
+                                                <input type="date" name="date_debut" class="form-control" data-toggle="datepicker"  value="<?php echo $thisReservation['date_debut']; ?>">
                                             </div><!-- /.travel-check-icon -->
                                         </div><!--/.single-tab-select-box-->
                                     </div><!--/.col-->
@@ -323,7 +333,7 @@ if (isset($_POST["add_rating"])){}
                                         <div class="single-tab-select-box">
                                             <h2>check out</h2>
                                             <div class="travel-check-icon">
-                                                <input type="date" name="date_fin" class="form-control"  data-toggle="datepicker" placeholder="22 -01 - 2017 ">
+                                                <input type="date" name="date_fin" class="form-control"  data-toggle="datepicker" value="<?php echo $thisReservation['date_fin']; ?>" >
                                             </div><!-- /.travel-check-icon -->
                                         </div><!--/.single-tab-select-box-->
                                     </div><!--/.col-->
@@ -333,12 +343,13 @@ if (isset($_POST["add_rating"])){}
                                             <h2>Adult</h2>
                                             <div class="travel-select-icon">
                                                 <select class="form-control " name="nombre_adulte">
-                                                    <option value="2">2</option><!-- /.option-->
-                                                    <option value="1">1</option><!-- /.option-->
-                                                    <option value="2">2</option><!-- /.option-->
-                                                    <option value="3">3</option><!-- /.option-->
-                                                    <option value="4">4</option><!-- /.option-->
-                                                    <option value="5">5</option><!-- /.option-->
+                                                    <?php
+                                                    $selectedValue = $thisReservation['nombre_adulte'];
+                                                    for ($i = 1; $i <= 5; $i++) {
+                                                        $selected = ($i == $selectedValue) ? 'selected' : '';
+                                                        echo "<option value=\"$i\" $selected>$i</option>";
+                                                    }   ?>
+
                                                 </select><!-- /.select-->
                                             </div><!-- /.travel-select-icon -->
                                         </div><!--/.single-tab-select-box-->
@@ -349,12 +360,14 @@ if (isset($_POST["add_rating"])){}
                                             <h2>children's</h2>
                                             <div class="travel-select-icon">
                                                 <select class="form-control " name="nombre_enfants">
-                                                    <option value="0">0</option><!-- /.option-->
-                                                    <option value="3">1</option><!-- /.option-->
-                                                    <option value="2">2</option><!-- /.option-->
-                                                    <option value="3">3</option><!-- /.option-->
-                                                    <option value="4">4</option><!-- /.option-->
-                                                    <option value="5">5</option><!-- /.option-->
+
+                                                    <?php
+                                                    $selectedValue_2 = $thisReservation['nombre_enfants'];
+                                                    for ($i = 0; $i <= 5; $i++) {
+                                                        $selected_2 = ($i == $selectedValue_2) ? 'selected' : '';
+                                                        echo "<option value=\"$i\" $selected_2>$i</option>";
+                                                    }   ?>
+
                                                 </select><!-- /.select-->
                                             </div><!-- /.travel-select-icon -->
                                         </div><!--/.single-tab-select-box-->
@@ -363,7 +376,7 @@ if (isset($_POST["add_rating"])){}
                                 <div class="row">
                                     <div  class="center-bt">
 
-                                        <button class="welcome-hero-btn " type="submit" name="add_reservation">
+                                        <button class="welcome-hero-btn " type="submit" name="update_reservation">
                                             Réserver
                                         </button>
 
